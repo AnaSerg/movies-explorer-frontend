@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
+import Techs from '../Techs/Techs';
 import './Main.css';
 
 const Main = () => {
@@ -10,7 +11,8 @@ const Main = () => {
             <div className="content">
                 <Header />
                 <Promo />
-                <AboutProject />
+                <AboutProject title='О проекте'/>
+                <Techs title='Технологии'/>
             </div>
         </main>
     )

@@ -1,9 +1,9 @@
 import React from 'react';
 import './SectionTitle.css';
 
-const SectionTitle = () => {
+const SectionTitle = ({title}) => {
     return (
-        <h2 className="section__title">О проекте</h2>
+        <h2 className="section__title">{title}</h2>
     )
 };
 
