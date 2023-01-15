@@ -41,6 +41,10 @@
     margin: 146px 0 75px;
 }
 
+.promo__button:hover {
+    opacity: .8;
+}
+
 .promo__image {
     width: 304px;
     height: 310px;

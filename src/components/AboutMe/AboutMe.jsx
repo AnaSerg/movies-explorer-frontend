@@ -18,7 +18,7 @@ const AboutMe = ({title}) => {
                     </p>
                     <a href="https://github.com/AnaSerg" className="about-me__link" target="blank">Github</a>
                 </div>
-                <img src={Photo} alt="" className="about-me__photo" />
+                <img src={Photo} alt="фото студента" className="about-me__photo" />
             </div>
         </section>
     )

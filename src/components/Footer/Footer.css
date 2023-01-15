@@ -1,0 +1,120 @@
+.footer {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 81px 0 0;
+}
+
+.footer__title {
+    width: 100%;
+    border-bottom: 1px solid #E8E8E8;
+    text-align: center;
+    padding-bottom: 20px;
+    margin: 0 0 5px 0;
+    color: #A0A0A0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.footer__info-area {
+    width: 100%;
+    margin: 21px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer__copyright {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.23;
+}
+
+.footer__links-list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    list-style-type: none;
+}
+
+.footer__link {
+    text-decoration: none;
+}
+
+.footer__link:hover {
+    opacity: .7;
+}
+
+.footer__link:first-of-type {
+    margin-right: 20px;
+}
+
+.footer__list-item {
+    margin: 0;
+    color: #000;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.23;
+}
+
+/* Max-width: 1200px */
+
+@media screen and (max-width: 1200px) {
+    .footer {
+        margin: 0 30px;
+    }
+
+    .footer__info-area {
+        margin-top: 18px;
+    }
+}
+
+/* Max-width: 360px */
+
+@media screen and (max-width: 360px) {
+    .footer {
+        margin: 0 10px;
+    }
+
+    .footer__title {
+        margin: 0 0 31px 0;
+        font-size: 12px;
+        line-height: 1.25;
+    }
+
+    .footer__info-area {
+        width: 100%;
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+
+    .footer__copyright {
+        color: #A0A0A0;
+        margin-top: 31px;
+        font-size: 12px;
+        line-height: 1.25;
+        letter-spacing: -.8px;
+    }
+
+    .footer__links-list {
+        padding: 0;
+        max-width: 111px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        list-style-type: none;
+    }
+
+    .footer__list-item {
+        margin: 0;
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.25;
+    }
+
+    .footer__link:first-of-type {
+        margin: 0 0 12px 0;
+    }
+}
