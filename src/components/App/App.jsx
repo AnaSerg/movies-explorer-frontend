@@ -1,12 +1,18 @@
 import React from 'react';
-//import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 import './App.css';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 
 const App = () => {
   return (
     <div className="page">
-        <Main />
+        <Routes>
+          <Route exact path="/" element={<Main />}>
+          </Route>
+          <Route path="/movies" element={<Movies /> }>
+          </Route>
+        </Routes>
     </div>
   );
 }

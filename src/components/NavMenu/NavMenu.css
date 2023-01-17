@@ -1,0 +1,10 @@
+
+    .header__navi-menu {
+        width: 60%;
+        height: 100vh;
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+    }

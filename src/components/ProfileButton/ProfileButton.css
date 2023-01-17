@@ -1,0 +1,21 @@
+.profile-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 32px;
+    border-radius: 50px;
+    border: 2px solid #aaa;
+}
+
+.profile-img {
+    width: 12px;
+    height: 14px;
+}
+
+.profile-title {
+    margin: 0 0 0 7px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.14;
+}
