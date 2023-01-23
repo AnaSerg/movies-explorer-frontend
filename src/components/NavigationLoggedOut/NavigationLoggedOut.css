@@ -1,20 +1,8 @@
-.navigation {
-    max-width: 183px;
-}
-
-.header__navigation-list {
-    padding: 0;
+.header__navigation_logged-out {
+    width: 183px;
     display: flex;
     align-items: center;
-}
-
-.header__navigation-item {
-    list-style-type: none;
-    margin-right: 30px;
-}
-
-.header__navigation-item:last-of-type {
-    margin-right: 0;
+    justify-content: space-between;
 }
 
 .header__button {
@@ -41,6 +29,7 @@
 }
 
 .header__button_type_register {
+    margin-right: 30px;
     color: #000;
 }
 
@@ -51,13 +40,17 @@
 /* Max-width 320px */
 
 @media screen and (max-width: 320px) {
-    .header__navigation-item {
-        margin-right: 14px;
+    .header__navigation_logged-out {
+        width: 132px;
     }
 
     .header__button {
         font-size: 10px;
         line-height: 1.6;
+    }
+
+    .header__button_type_register {
+        margin-right: 14px;
     }
 
     .header__button_type_login {

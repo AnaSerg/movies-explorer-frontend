@@ -21,12 +21,6 @@ export default App;
 
 /*
 <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="movies">
-            <Movies />
-          </Route>
           <Route path="/saved-movies">
             <SavedMovies />
           </Route>

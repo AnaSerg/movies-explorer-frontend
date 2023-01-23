@@ -1,0 +1,109 @@
+.burger-menu {
+    background: rgba(0, 0, 0, .3);
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+
+.burger-menu__content {
+    position: absolute;
+    width: 67.7%;
+    top: 0;
+    right: 0;
+    padding: 156px 0 90px;
+    height: 100vh;
+    background-color: #fff;
+    transform: translateX(100%);
+    transition: transform 1s;
+}
+
+.burger-menu__content_active {
+    transform: translateX(0);
+}
+
+.burger-menu_active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.burger__button {
+    position: absolute;
+    padding: 0;
+    top: 21px;
+    right: 21.5px;
+    background-image: url('../../images/header__icon-cross.svg');
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: #fff;
+}
+
+.burger-menu__navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.burger-menu__link {
+    text-decoration: none;
+    display: inline-block;
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.22;
+    text-align: center;
+    margin-bottom: 23px;
+    padding-bottom: 4px;
+}
+
+/* Не нашла способа лучше добавить класс active в зависимости от текущей страницы */
+
+.burger-menu__link_active {
+    text-decoration: none;
+    display: inline-block;
+    width: fit-content;
+    align-self: center;
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.22;
+    text-align: center;
+    margin-bottom: 23px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #000;
+}
+
+.burger-menu__link:last-of-type {
+    margin-bottom: 618px;
+}
+
+@media screen and (max-width: 550px) {
+    .burger-menu__content {
+        width: 100%;
+        padding: 144px 0 46px;
+    }
+
+    .burger__button {
+        top: 16px;
+        right: 16px;
+    }
+
+    .burger-menu__link {
+        margin-bottom: 24px;
+    }
+
+    .burger-menu__link:last-of-type {
+        margin-bottom: 444px;
+    }
+}
+
+
+

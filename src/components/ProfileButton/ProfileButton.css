@@ -19,3 +19,10 @@
     font-weight: 500;
     line-height: 1.14;
 }
+
+@media screen and (max-width: 768px) {
+    .profile-button {
+        align-self: center;
+    }
+}
+
