@@ -36,5 +36,3 @@ const BurgerMenu = ({ isVisible, setVisible }) => {
 };
 
 export default BurgerMenu;
-
-//className={pathname === '/movies' ? 'header__nav-link_active' : 'header__nav-link'

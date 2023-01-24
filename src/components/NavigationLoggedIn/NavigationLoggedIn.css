@@ -28,6 +28,7 @@
 
 .header__nav-link:hover {
     opacity: .7;
+    transition: opacity .3s;
 }
 
 /* Не нашла способа лучше добавить класс active в зависимости от текущей страницы */

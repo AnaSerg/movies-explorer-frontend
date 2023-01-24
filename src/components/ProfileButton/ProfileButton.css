@@ -6,6 +6,12 @@
     height: 32px;
     border-radius: 50px;
     border: 2px solid #aaa;
+    cursor: pointer;
+}
+
+.profile-button:hover {
+    opacity: .8;
+    transition: opacity .3s;
 }
 
 .profile-img {

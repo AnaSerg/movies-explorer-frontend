@@ -10,8 +10,8 @@ import './Main.css';
 
 const Main = () => {
     return (
-        <main className="main">
-            <div className="content">
+        <main className="main-main">
+            <div className="content-main">
                 <Header />
                 <Promo />
                 <AboutProject title='О проекте'/>

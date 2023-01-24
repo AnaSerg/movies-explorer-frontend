@@ -26,6 +26,7 @@
 
 .header__button_type_login:hover {
     opacity: .8;
+    transition: opacity .3s;
 }
 
 .header__button_type_register {
@@ -35,6 +36,7 @@
 
 .header__button_type_register:hover {
     opacity: .7;
+    transition: opacity .3s;
 }
 
 /* Max-width 320px */

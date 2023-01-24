@@ -17,8 +17,6 @@
     height: 38px;
 }
 
-/* Max-width 1200px */
-
 @media screen and (max-width: 1200px) {
     .header__wrapper {
         margin: 0 30px;
@@ -41,9 +39,9 @@
     }
 }
 
-/* Max-width 320px */
+/* Max-width 400px */
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 400px) {
     .header__wrapper {
         margin: 0 14px;
     }
