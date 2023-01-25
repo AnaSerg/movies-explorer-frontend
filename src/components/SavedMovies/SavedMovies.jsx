@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../Header/Header';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import SearchForm from '../SearchForm/SearchForm';
 import Checkbox from '../Checkbox/Checkbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import './Movies.css';
+import { savedMovies } from '../../utils/constants';
+import './SavedMovies.css';
 
-const SavedMovies = () => {
-
-    const [isVisible, setVisible] = useState(false);
-
-    const openBurgerMenu = () => {
-        setVisible(true);
-    }
+const SavedMovies = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
 
     return (
         <main className="main">
@@ -21,8 +16,8 @@ const SavedMovies = () => {
                 <Header openBurgerMenu={openBurgerMenu}/>
                 <SearchForm />
                 <Checkbox text="Короткометражки" />
-                <MoviesCardList />
-                <BurgerMenu isVisible={isVisible} setVisible={setVisible}/>
+                <MoviesCardList moviesList={savedMovies}/>
+                <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
                 <Footer />
             </div>
         </main>

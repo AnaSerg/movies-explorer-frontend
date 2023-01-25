@@ -23,7 +23,7 @@
 @media screen and (max-width: 1200px) {
     .movies-list__button {
         margin: 50px 30px 78px;
-        max-width: 708px;
+        max-width: calc(100% - 30px*2);
     }
 }
 
@@ -33,9 +33,9 @@
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     .movies-list__button {
         margin: 56px 10px 78px;
-        max-width: 300px;
+        max-width: calc(100% - 10px*2);
     }
 }

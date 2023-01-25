@@ -1,16 +1,15 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesListButton from '../MoviesListButton/MoviesListButton';
-import { movies } from '../../utils/constants';
 import './MoviesCardList.css';
 
-const MoviesCardList = () => {
+const MoviesCardList = ({ moviesList }) => {
 
     return (
         <>
             <div className="movies__card-list">
                 {
-                    movies.map((movie) => (
+                    moviesList.map((movie) => (
                         <MoviesCard key={movie.id} title={movie.title} duration={movie.duration} image={movie.image} />
                     ))
                 }

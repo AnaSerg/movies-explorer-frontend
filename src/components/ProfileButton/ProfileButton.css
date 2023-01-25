@@ -26,6 +26,11 @@
     line-height: 1.14;
 }
 
+.profile__button-link {
+    text-decoration: none;
+    color: #000;
+}
+
 @media screen and (max-width: 768px) {
     .profile-button {
         align-self: center;

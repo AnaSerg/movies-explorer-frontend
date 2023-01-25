@@ -2,7 +2,7 @@
     height: 72px;
     max-width: 1140px;
     box-sizing: border-box;
-    margin: 74px auto 0;
+    margin: 68px auto 0;
 }
 
 .search-bar__form {
@@ -52,14 +52,14 @@
 }
 
 @media screen and (max-width: 1200px) {
-.search-bar {
-    margin: 74px 30px 0;
-}
+    .search-bar {
+        margin: 68px 30px 0;
+    }
 }
 
 @media screen and (max-width: 400px) {
     .search-bar {
-        margin: 74px 14px 0;
+        margin: 68px 14px 0;
         height: 56px;
     }
 

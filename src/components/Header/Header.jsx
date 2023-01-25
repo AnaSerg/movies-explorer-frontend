@@ -4,7 +4,6 @@ import Logo from '../../images/logo.svg';
 import './Header.css';
 import NavigationLoggedOut from '../NavigationLoggedOut/NavigationLoggedOut';
 import NavigationLoggedIn from '../NavigationLoggedIn/NavigationLoggedIn'
-import ProfileButton from '../ProfileButton/ProfileButton';
 
 
 const Header = ({ openBurgerMenu }) => {

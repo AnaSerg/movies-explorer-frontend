@@ -1,7 +1,7 @@
 .promo {
     background-color: #F3C1F8;
     width: 100%;
-    padding-top: 80px;
+    padding-top: 75px;
 }
 
 .promo__wrapper {
@@ -65,7 +65,7 @@
 
 @media screen and (max-width: 1024px) {
     .promo {
-        padding-top: 144px;
+        padding-top: 136px;
     }
 
     .promo__wrapper {
@@ -101,7 +101,7 @@
 
 @media screen and (max-width: 320px) {
     .promo {
-        padding-top: 75px;
+        padding-top: 65px;
     }
 
     .promo__wrapper {

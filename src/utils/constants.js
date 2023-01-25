@@ -116,3 +116,23 @@ export const movies = [
     }
 ]
 
+export const savedMovies = [
+    {
+        image: Img1,
+        title: '33 слова о дизайне',
+        duration: '1ч 42м',
+        id: 1
+    },
+    {
+        image: Img2,
+        title: 'Киноальманах «100 лет дизайна»',
+        duration: '1ч 42м',
+        id: 2
+    },
+    {
+        image: Img3,
+        title: 'В погоне за Бенкси',
+        duration: '1ч 42м',
+        id: 3
+    }
+]
