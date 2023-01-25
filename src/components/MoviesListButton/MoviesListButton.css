@@ -1,0 +1,41 @@
+.movies-list__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1140px;
+    height: 36px;
+    margin: 50px auto 78px;
+    background-color: #F9F9F9;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.15;
+    cursor: pointer;
+}
+
+.movies-list__button:hover {
+    opacity: .8;
+    transition: opacity .3s;
+}
+
+@media screen and (max-width: 1200px) {
+    .movies-list__button {
+        margin: 50px 30px 78px;
+        max-width: 708px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .movies-list__button {
+        margin: 56px 30px 78px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .movies-list__button {
+        margin: 56px 10px 78px;
+        max-width: 300px;
+    }
+}

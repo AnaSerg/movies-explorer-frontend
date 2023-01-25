@@ -12,7 +12,7 @@
     padding: 0 10px 0 25px;
     height: 100%;
     outline: none;
-    border: 1.5px solid #aaa;
+    border: 1.5px solid rgba(170,170,170, .2);
     border-radius: 8px;
 }
 
@@ -36,6 +36,7 @@
 
 .search-bar__input {
     height: 100%;
+    width: 90%;
     border: none;
     margin: 0;
     padding: 0;
