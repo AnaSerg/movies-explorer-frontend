@@ -5,6 +5,7 @@ import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/movies" element={<Movies openBurgerMenu={openBurgerMenu} isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible} /> } />
           <Route path="/saved-movies" element={<SavedMovies openBurgerMenu={openBurgerMenu} isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible} /> } />
           <Route path="/profile" element={<Profile openBurgerMenu={openBurgerMenu} isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible} /> } />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
     </div>
   );
