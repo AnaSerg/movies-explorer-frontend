@@ -7,7 +7,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import './Movies.css';
 
-const Movies = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
+const SavedMovies = () => {
+
+    const [isVisible, setVisible] = useState(false);
+
+    const openBurgerMenu = () => {
+        setVisible(true);
+    }
 
     return (
         <main className="main">
@@ -16,11 +22,11 @@ const Movies = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) =
                 <SearchForm />
                 <Checkbox text="Короткометражки" />
                 <MoviesCardList />
-                <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
+                <BurgerMenu isVisible={isVisible} setVisible={setVisible}/>
                 <Footer />
             </div>
         </main>
     )
 };
 
-export default Movies;
+export default SavedMovies;
