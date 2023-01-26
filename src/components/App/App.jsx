@@ -7,6 +7,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/saved-movies" element={<SavedMovies openBurgerMenu={openBurgerMenu} isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible} /> } />
           <Route path="/profile" element={<Profile openBurgerMenu={openBurgerMenu} isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible} /> } />
           <Route path="signup" element={<Register />} />
+          <Route path="signin" element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
     </div>
@@ -31,21 +33,3 @@ const App = () => {
 }
 
 export default App;
-
-/*
-<Switch>
-          <Route path="/saved-movies">
-            <SavedMovies />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/signin">
-            <Login />
-          </Route>
-          <Route path="signup">
-            <Register />
-          </Route>
-        </Switch>
-
-        */

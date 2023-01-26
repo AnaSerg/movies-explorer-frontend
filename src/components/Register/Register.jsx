@@ -11,7 +11,7 @@ const Register = () => {
     return (
         <div className="register">
             <div className="register__container">
-                <img className="register__logo" alt="логотип" src={Logo}></img>
+                <Link to="/"><img className="register__logo" alt="логотип" src={Logo}></img></Link>
                 <h2 className="register__welcome">Добро пожаловать!</h2>
                 <form className="register__form" noValidate>
                     <label className="register__label" for="name">Имя</label>
@@ -25,7 +25,7 @@ const Register = () => {
                 </form>
                 <div className="register__login-area">
                     <p className="register__reg-question">Уже зарегистрированы?</p>
-                    <Link to="signin" className="register__login-link">Войти</Link>
+                    <Link to="/signin" className="register__login-link">Войти</Link>
                 </div>
             </div>
         </div>
