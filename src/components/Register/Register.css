@@ -53,17 +53,21 @@
     padding-left: 15px;
 }
 
+.register__input:focus {
+    background-color: #ebeaea;
+    transition: background-color .5s;
+}
+
 .register__error {
-    color: #FF4062;
+    color: #fff;
     font-size: 10px;
     font-weight: 400;
     line-height: 1.2;
     margin: 10px 0 67px;
-    visibility: visible;
 }
 
 .register__error_active {
-    visibility: visible;
+    color: #FF4062;
 }
 
 .register__button {
@@ -81,6 +85,14 @@
 .register__button:hover {
     opacity: .8;
     transition: opacity .2s;
+}
+
+.register__button_inactive {
+    opacity: .6;
+}
+
+.register__button_inactive:hover {
+    opacity: .6;
 }
 
 .register__login-area {

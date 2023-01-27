@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Login.css';
 
-const Register = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
 
     return (
         <div className="login">
@@ -15,9 +14,9 @@ const Register = () => {
                 <h2 className="login__welcome">Рады видеть!</h2>
                 <form className="login__form" noValidate>
                     <label className="login__label" for="email">E-mail</label>
-                    <input className="login__input" id="email" required name="email" type="email" value={email} onChange={({target}) => setEmail(target.value)} />
+                    <input className="login__input" id="email" required name="email" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                     <label className="login__label" for="password">Пароль</label>
-                    <input className="login__input" id="password" required name="password" type="password" value={password} onChange={({target}) => setPassword(target.value)} />
+                    <input className="login__input" id="password" required name="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                     <span className="login__error">Что-то пошло не так...</span>
                     <button type="submit" className="login__button">Войти</button>
                 </form>
@@ -30,4 +29,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
