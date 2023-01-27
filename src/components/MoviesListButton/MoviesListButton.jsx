@@ -3,7 +3,7 @@ import './MoviesListButton.css';
 
 const MoviesListButton = ({ text }) => {
     return (
-        <button className="movies-list__button">{text}</button>
+        <button className="list-button">{text}</button>
     );
 };
 

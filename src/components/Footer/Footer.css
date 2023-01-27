@@ -40,6 +40,7 @@
 }
 
 .footer__link {
+    color: #000;
     text-decoration: none;
 }
 
@@ -47,16 +48,15 @@
     opacity: .7;
 }
 
-.footer__link:first-of-type {
-    margin-right: 20px;
-}
-
 .footer__list-item {
     margin: 0;
-    color: #000;
     font-size: 13px;
     font-weight: 400;
     line-height: 1.23;
+}
+
+.footer__list-item:first-of-type {
+    margin-right: 20px;
 }
 
 /* Max-width: 1200px */
@@ -110,7 +110,7 @@
         line-height: 1.25;
     }
 
-    .footer__link:first-of-type {
+    .footer__list-item:first-of-type {
         margin: 0 0 12px 0;
     }
 }

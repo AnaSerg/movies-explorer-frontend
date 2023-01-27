@@ -11,7 +11,7 @@
     flex-direction: column;
 }
 
-.techs__title {
+.techs__heading {
     margin: 90px auto 0;
     text-align: center;
     font-size: 50px;
@@ -20,7 +20,7 @@
     letter-spacing: -1.9px;
 }
 
-.techs__subtitle {
+.techs__subheading {
     margin: 26px auto 0;
     text-align: center;
     font-size: 14px;
@@ -72,11 +72,11 @@
         background-color: #fff; /* Похоже на ошибку в макете, ожидала серый фон */
     }
 
-    .techs__title {
+    .techs__heading {
         margin: 80px auto 0;
     }
 
-    .techs__subtitle {
+    .techs__subheading {
         margin: 23px auto 0;
         width: 100%;
         font-size: 12px;
@@ -121,14 +121,14 @@
         margin: 0 18px;
     }
 
-    .techs__title {
+    .techs__heading {
         margin: 60px auto 0;
         font-size: 30px;
         line-height: 1.2;
         letter-spacing: -1.2px;
     }
 
-    .techs__subtitle {
+    .techs__subheading {
         margin: 25px auto 0;
         font-size: 11px;
         line-height: 1.45;

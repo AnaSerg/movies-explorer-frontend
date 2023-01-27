@@ -1,4 +1,4 @@
-.movies-list__button {
+.list-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,26 +15,26 @@
     cursor: pointer;
 }
 
-.movies-list__button:hover {
+.list-button:hover {
     opacity: .8;
     transition: opacity .3s;
 }
 
 @media screen and (max-width: 1200px) {
-    .movies-list__button {
+    .list-button {
         margin: 50px 30px 78px;
         max-width: calc(100% - 30px*2);
     }
 }
 
 @media screen and (max-width: 768px) {
-    .movies-list__button {
+    .list-button {
         margin: 56px 30px 78px;
     }
 }
 
 @media screen and (max-width: 500px) {
-    .movies-list__button {
+    .list-button {
         margin: 56px 10px 78px;
         max-width: calc(100% - 10px*2);
     }

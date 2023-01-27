@@ -6,7 +6,7 @@ import './AboutMe.css';
 const AboutMe = ({title}) => {
     return (
         <section className="about-me">
-            <SectionTitle title={title}/>
+            <SectionTitle title={title} className="about-me__heading section-title"/>
             <div className="about-me__content">
                 <div className="about-me__info">
                     <h3 className="about-me__title">Анастасия</h3>

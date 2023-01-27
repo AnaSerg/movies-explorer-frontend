@@ -1,7 +1,7 @@
-.profile-button {
+.profile-button__container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 100px;
     height: 32px;
     border-radius: 50px;
@@ -9,30 +9,30 @@
     cursor: pointer;
 }
 
-.profile-button:hover {
+.profile-button__container:hover {
     opacity: .8;
     transition: opacity .3s;
 }
 
-.profile-img {
+.profile-button__img {
     width: 12px;
     height: 14px;
 }
 
-.profile-title {
+.profile-button__title {
     margin: 0 0 0 7px;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.14;
 }
 
-.profile__button-link {
+.profile-button {
     text-decoration: none;
     color: #000;
 }
 
 @media screen and (max-width: 768px) {
-    .profile-button {
+    .profile-button__container {
         align-self: center;
     }
 }

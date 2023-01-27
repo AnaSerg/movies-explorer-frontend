@@ -13,7 +13,7 @@ const BurgerMenu = ({ isBurgerMenuVisible, setBurgerMenuVisible }) => {
     return (
         <div className={`burger-menu ${isBurgerMenuVisible ? 'burger-menu_active' : ""}`}>
             <div className={`burger-menu__content ${isBurgerMenuVisible ? 'burger-menu__content_active' : ""}`}>
-                <button onClick={closeBurgerMenu} className="burger__button"></button>
+                <button onClick={closeBurgerMenu} className="burger-menu__button"></button>
                 <nav className="burger-menu__navigation">
                     <ul className="burger-menu__links">
                         <li className={`burger-menu__link-item ${pathname === '/' ? 'burger-menu__link-item_active' : ""}`}>
@@ -26,7 +26,7 @@ const BurgerMenu = ({ isBurgerMenuVisible, setBurgerMenuVisible }) => {
                             <Link to='/saved-movies' className="burger-menu__link">Сохранённые фильмы</Link>
                         </li>
                     </ul>
-                    <ProfileButton />
+                    <ProfileButton className="burger-menu__profile-button profile-button" />
                 </nav>
             </div>
         </div>

@@ -6,9 +6,9 @@ const Techs = ({title}) => {
     return (
         <section className="techs">
             <div className="techs__wrapper">
-                <SectionTitle title={title}/>
-                <h3 className="techs__title">7 технологий</h3>
-                <p className="techs__subtitle">
+                <SectionTitle className="techs__wrapper-title section-title" title={title}/>
+                <h3 className="techs__heading">7 технологий</h3>
+                <p className="techs__subheading">
                     На курсе веб-разработки мы освоили технологии,
                     которые применили в дипломном проекте.
                 </p>

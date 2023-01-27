@@ -12,18 +12,18 @@ import './Main.css';
 const Main = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
 
     return (
-        <main className="main-main">
-            <div className="content-main">
-                <Header openBurgerMenu={openBurgerMenu}/>
+        <div>
+            <Header openBurgerMenu={openBurgerMenu}/>
+            <main className="main">
                 <Promo />
                 <AboutProject title='О проекте'/>
                 <Techs title='Технологии'/>
                 <AboutMe title='Студент' />
                 <Portfolio />
-                <Footer />
                 <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
-            </div>
-        </main>
+            </main>
+            <Footer />
+        </div>
     )
 };
 

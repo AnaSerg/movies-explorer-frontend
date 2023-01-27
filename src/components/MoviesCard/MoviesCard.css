@@ -39,7 +39,7 @@
     background-image: url('../../images/like.svg');
 }
 
-.movies-card__like_saved {
+.movies-card__dislike {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -48,7 +48,7 @@
     cursor: pointer;
 }
 
-.movies-card__like_saved:hover {
+.movies-card__dislike:hover {
     background-image: url('../../images/deleteCard.svg');
 }
 

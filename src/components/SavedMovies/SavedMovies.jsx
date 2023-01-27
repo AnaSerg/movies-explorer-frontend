@@ -11,16 +11,16 @@ import './SavedMovies.css';
 const SavedMovies = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
 
     return (
-        <main className="main">
-            <div className="content-movies">
-                <Header openBurgerMenu={openBurgerMenu}/>
+        <div>
+            <Header openBurgerMenu={openBurgerMenu}/>
+            <main className="main">
                 <SearchForm />
                 <Checkbox text="Короткометражки" />
                 <MoviesCardList moviesList={savedMovies}/>
                 <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
-                <Footer />
-            </div>
-        </main>
+            </main>
+            <Footer />
+        </div>
     )
 };
 

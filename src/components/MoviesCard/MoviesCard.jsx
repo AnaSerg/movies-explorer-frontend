@@ -21,7 +21,7 @@ const MoviesCard = ({ image, title, duration }) => {
                 <h3 className="movies-card__title">{title}</h3>
                 {
                     pathname === '/saved-movies' ?
-                    <button className='movies-card__like_saved' onClick={handleLikeClick}></button> :
+                    <button className='movies-card__dislike' onClick={handleLikeClick}></button> :
                     <button className={`movies-card__like ${isLiked ? 'movies-card__like_active' : ""}`} onClick={handleLikeClick}></button>
                 }
             </div>

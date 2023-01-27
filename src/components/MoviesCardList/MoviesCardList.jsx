@@ -7,13 +7,13 @@ const MoviesCardList = ({ moviesList }) => {
 
     return (
         <>
-            <div className="movies__card-list">
+            <ul className="movies-list">
                 {
                     moviesList.map((movie) => (
-                        <MoviesCard key={movie.id} title={movie.title} duration={movie.duration} image={movie.image} />
+                        <li className="movies-list__item"><MoviesCard key={movie.id} title={movie.title} duration={movie.duration} image={movie.image} /></li>
                     ))
                 }
-            </div>
+            </ul>
             <MoviesListButton text="Ещё"/>
         </>
     )

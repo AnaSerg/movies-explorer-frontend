@@ -20,9 +20,6 @@
 .portfolio__list-item {
     padding: 20px 0 19px;
     border-top: 1px solid #E8E8E8;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .portfolio__list-item:first-of-type {
@@ -34,7 +31,15 @@
     padding: 20px 0 0;
 }
 
+.portfolio__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+
 .portfolio__item-title {
+    color: #000;
     margin: 0;
     font-size: 30px;
     font-weight: 400;
@@ -45,7 +50,6 @@
 .portfolio__button {
     cursor: pointer;
     background-image: url('../../images/arrow-link.svg');
-    border: none;
     width: 18px;
     height: 17px;
     margin: 9px 9px 0 0;

@@ -7,12 +7,12 @@ const NavigationLoggedIn = () => {
     const { pathname } = useLocation();
 
     return (
-        <nav className="header__navigation header__navigation_logged-in">
-            <div className="header__navigation-menu">
-                <Link to='/movies' className={pathname === '/movies' ? 'header__nav-link_active' : 'header__nav-link'}>Фильмы</Link>
-                <Link to='/saved-movies' className={pathname === '/saved-movies' ? 'header__nav-link_active' : 'header__nav-link'}>Сохранённые фильмы</Link>
+        <nav className="header-navigation header-navigation_logged-in">
+            <div className="header-navigation__menu">
+                <Link to='/movies' className={`header-navigation__link ${pathname === '/movies' ? 'header-navigation__link_active' : ""}`}>Фильмы</Link>
+                <Link to='/saved-movies' className={`header-navigation__link ${pathname === '/saved-movies' ? 'header-navigation__link_active' : ""}`}>Сохранённые фильмы</Link>
             </div>
-            <ProfileButton />
+            <ProfileButton className="header-navigation__button profile-button"/>
         </nav>
     )
 };
