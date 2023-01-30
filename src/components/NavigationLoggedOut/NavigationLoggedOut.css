@@ -1,0 +1,62 @@
+.header__navigation_logged-out {
+    width: 183px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__button {
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.33;
+}
+
+.header__button_type_login {
+    width: 76px;
+    height: 32px;
+    background-color: #000;
+    border-radius: 3px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__button_type_login:hover {
+    opacity: .8;
+    transition: opacity .3s;
+}
+
+.header__button_type_register {
+    margin-right: 30px;
+    color: #000;
+}
+
+.header__button_type_register:hover {
+    opacity: .7;
+    transition: opacity .3s;
+}
+
+/* Max-width 320px */
+
+@media screen and (max-width: 320px) {
+    .header__navigation_logged-out {
+        width: 132px;
+    }
+
+    .header__button {
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+    .header__button_type_register {
+        margin-right: 14px;
+    }
+
+    .header__button_type_login {
+        width: 54px;
+        height: 26px;
+    }
+}

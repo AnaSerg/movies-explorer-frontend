@@ -1,0 +1,150 @@
+.techs {
+    background-color: #F5F5F5;
+    padding: 100px 0;
+    width: 100%;
+}
+
+.techs__wrapper {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.techs__heading {
+    margin: 90px auto 0;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 1.16;
+    letter-spacing: -1.9px;
+}
+
+.techs__subheading {
+    margin: 26px auto 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -.5px;
+    max-width: 460px;
+}
+
+.techs__list {
+    margin: 100px 0 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    gap: 10px;
+    align-self: center;
+}
+
+.techs__list-item {
+    display: inline-block;
+    width: 90px;
+    border-radius: 10px;
+    background-color: #E8E8E8;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -.6px;
+    padding: 21px 0 22px;
+    text-align: center;
+}
+
+.techs__list-item:last-of-type {
+    margin: 0;
+}
+
+/* Max-width 1200px */
+
+@media screen and (max-width: 1200px) {
+    .techs__wrapper {
+        margin: 0 50px;
+    }
+}
+
+/* Max-width 768px */
+
+@media screen and (max-width: 768px) {
+    .techs {
+        padding: 90px 0;
+        background-color: #fff; /* Похоже на ошибку в макете, ожидала серый фон */
+    }
+
+    .techs__heading {
+        margin: 80px auto 0;
+    }
+
+    .techs__subheading {
+        margin: 23px auto 0;
+        width: 100%;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .techs__list {
+        margin: 83px 0 0;
+    }
+
+    .techs__list-item {
+        width: 84px;
+        font-size: 12px;
+        line-height: 1.25;
+        padding: 21px 0;
+    }
+}
+
+/* Max-width 700px */
+
+@media screen and (max-width: 700px) {
+    .techs__wrapper {
+        margin: 0 18px;
+    }
+
+    .techs__list {
+        margin: 100px 0 0;
+        max-width: 380px;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+}
+
+/* Max-width 320px */
+
+@media screen and (max-width: 320px) {
+    .techs {
+        padding: 70px 0;
+    }
+
+    .techs__wrapper {
+        margin: 0 18px;
+    }
+
+    .techs__heading {
+        margin: 60px auto 0;
+        font-size: 30px;
+        line-height: 1.2;
+        letter-spacing: -1.2px;
+    }
+
+    .techs__subheading {
+        margin: 25px auto 0;
+        font-size: 11px;
+        line-height: 1.45;
+    }
+
+    .techs__list-item {
+        width: 84px;
+        font-size: 12px;
+        line-height: 1.25;
+        padding: 21px 0;
+    }
+
+    .techs__list {
+        margin: 50px 0 0;
+        max-width: 178px;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+}
