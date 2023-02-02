@@ -1,7 +1,11 @@
 .footer {
+    width: 100%;
+    padding-top: 81px;
+}
+
+.footer__wrapper {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 81px 0 0;
 }
 
 .footer__title {
@@ -62,7 +66,7 @@
 /* Max-width: 1200px */
 
 @media screen and (max-width: 1200px) {
-    .footer {
+    .footer__wrapper {
         margin: 18px 30px 0;
     }
 }
@@ -70,7 +74,7 @@
 /* Max-width: 360px */
 
 @media screen and (max-width: 360px) {
-    .footer {
+    .footer__wrapper {
         margin: 0 10px;
     }
 

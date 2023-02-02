@@ -5,18 +5,31 @@ import SearchForm from '../SearchForm/SearchForm';
 import Checkbox from '../Checkbox/Checkbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import { movies } from '../../utils/constants';
+import { Preloader } from '../UI/preloader/Preloader';
+import MoviesListButton from '../MoviesListButton/MoviesListButton';
 import './Movies.css';
 
-const Movies = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
+const Movies = ({ setNotFoundMessage, notFoundMessage, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, movies, isLoading, movieError, filter, setFilter, setSearchedMovies}) => {
 
     return (
-        <div>
+        <div className="test">
             <Header openBurgerMenu={openBurgerMenu}/>
             <main className="main">
-                <SearchForm />
+                <SearchForm setNotFoundMessage={setNotFoundMessage} filter={filter} setFilter={setFilter} movies={movies} setSearchedMovies={setSearchedMovies}/>
                 <Checkbox text="Короткометражки" />
-                <MoviesCardList moviesList={movies}/>
+                { isLoading
+                    ? <div className="movies-preloader"><Preloader /></div>
+                    : <MoviesCardList moviesList={searchedMovies} notFoundMessage={notFoundMessage}/>
+                }
+                { movieError &&
+                    <h2 className="movies-error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</h2>
+                }
+                { notFoundMessage &&
+                    <h2 className="movies-error">Ничего не найдено</h2>
+                }
+                { searchedMovies.length !== 0 &&
+                    <MoviesListButton text="Ещё"/>
+                }
                 <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
             </main>
             <Footer />
