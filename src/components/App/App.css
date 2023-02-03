@@ -5,9 +5,3 @@
   color: #000;
   position: relative;
 }
-
-.test {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}

@@ -9,7 +9,7 @@ const MoviesCardList = ({ moviesList }) => {
             <ul className="movies-list">
                 { moviesList &&
                     moviesList.map((movie) => (
-                        <li key={movie.id} className="movies-list__item"><MoviesCard title={movie.nameRU} duration={movie.duration} image={'https://api.nomoreparties.co' + movie.image.url} /></li>
+                        <li key={movie.id} className="movies-list__item"><MoviesCard title={movie.nameRU || movie.nameEN} duration={movie.duration} image={'https://api.nomoreparties.co' + movie.image.url} /></li>
                     ))
                 }
             </ul>

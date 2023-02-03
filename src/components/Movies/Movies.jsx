@@ -9,19 +9,19 @@ import { Preloader } from '../UI/preloader/Preloader';
 import MoviesListButton from '../MoviesListButton/MoviesListButton';
 import './Movies.css';
 
-const Movies = ({ setNotFoundMessage, notFoundMessage, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, movies, isLoading, movieError, filter, setFilter, setSearchedMovies}) => {
+const Movies = ({ error, onSearchForm, notFoundMessage, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
 
     return (
-        <div className="test">
+        <div className="page__container">
             <Header openBurgerMenu={openBurgerMenu}/>
             <main className="main">
-                <SearchForm setNotFoundMessage={setNotFoundMessage} filter={filter} setFilter={setFilter} movies={movies} setSearchedMovies={setSearchedMovies}/>
+                <SearchForm onSearchForm={onSearchForm} filter={filter} setFilter={setFilter} />
                 <Checkbox text="Короткометражки" />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
-                    : <MoviesCardList moviesList={searchedMovies} notFoundMessage={notFoundMessage}/>
+                    : <MoviesCardList moviesList={searchedMovies} />
                 }
-                { movieError &&
+                { error &&
                     <h2 className="movies-error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</h2>
                 }
                 { notFoundMessage &&

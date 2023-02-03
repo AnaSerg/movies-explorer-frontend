@@ -12,7 +12,7 @@ import './Main.css';
 const Main = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
 
     return (
-        <div>
+        <div className="page__container">
             <Header openBurgerMenu={openBurgerMenu}/>
             <main className="main">
                 <Promo />

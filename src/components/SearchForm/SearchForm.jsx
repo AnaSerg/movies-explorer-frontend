@@ -1,20 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './SearchForm.css';
 
-const SearchBar = ({ filter, setFilter, movies, setSearchedMovies, setNotFoundMessage }) => {
+const SearchBar = ({ onSearchForm, filter, setFilter }) => {
 
     const handleSearchMovies = (e) => {
         e.preventDefault();
-        localStorage.setItem('query', filter.query);
-        const filteredMovies = movies.filter(movie => movie.nameRU.toLowerCase().includes(filter.query.toLowerCase()));
-        localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-        setSearchedMovies(filteredMovies);
-
-        if (filteredMovies.length === 0) {
-            setNotFoundMessage(true);
-        } else {
-            setNotFoundMessage(false);
-        }
+        onSearchForm();
     }
 
     return (
