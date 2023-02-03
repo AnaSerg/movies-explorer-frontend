@@ -28,7 +28,7 @@ const MoviesCard = ({ image, title, duration }) => {
                     <button className={`movies-card__like ${isLiked ? 'movies-card__like_active' : ""}`} onClick={handleLikeClick}></button>
                 }
             </div>
-            <p className="movies-card__duration">{`${hours}ч ${minutes}м`}</p>
+            <p className="movies-card__duration">{ duration > 60 ? `${hours}ч ${minutes}м` : `${minutes}м`}</p>
         </div>
     );
 };
