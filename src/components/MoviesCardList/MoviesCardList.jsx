@@ -1,6 +1,7 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
+import MoviesListButton from "../MoviesListButton/MoviesListButton";
 
 const MoviesCardList = ({ moviesList }) => {
 
@@ -13,6 +14,9 @@ const MoviesCardList = ({ moviesList }) => {
                     ))
                 }
             </ul>
+            { moviesList.length !== 0 &&
+                <MoviesListButton text="Ещё"/>
+            }
         </>
     )
 };

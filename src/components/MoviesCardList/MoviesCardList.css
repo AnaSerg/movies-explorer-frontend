@@ -9,6 +9,14 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+.movies-error {
+    max-width: 50%;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+}
+
 @media screen and (max-width: 1200px) {
     .movies-list {
         margin: 50px 30px 0;
