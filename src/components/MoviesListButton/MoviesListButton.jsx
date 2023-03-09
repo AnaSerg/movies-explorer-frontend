@@ -8,7 +8,7 @@ const MoviesListButton = ({ text, onPagination, moviesList, initialMovies, limit
         onPagination();
     }
     return (
-        <button onClick={() => handlePagination()} className="list-button">{text}</button>
+        moviesList.length !== 0 && <button onClick={() => handlePagination()} className="list-button">{text}</button>
     );
 };
 
