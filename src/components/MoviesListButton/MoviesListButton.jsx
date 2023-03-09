@@ -1,9 +1,14 @@
 import React from 'react';
 import './MoviesListButton.css';
 
-const MoviesListButton = ({ text }) => {
+const MoviesListButton = ({ text, onPagination, moviesList, initialMovies, limit, setLimit }) => {
+
+    const handlePagination = () => {
+        setLimit(limit + 4);
+        onPagination();
+    }
     return (
-        <button className="list-button">{text}</button>
+        <button onClick={() => handlePagination()} className="list-button">{text}</button>
     );
 };
 

@@ -21,7 +21,7 @@ const SearchBar = ({ onSearchForm, filter, setFilter }) => {
     return (
         <div className="search-bar">
             <form className="search-bar__form" action="#" method="POST" name="search" noValidate>
-                <input onChange={e => setFilter({query: e.target.value})} required value={filter.query} name="search" id="search" type="search" className="search-bar__input" placeholder="Фильм"/>
+                <input onChange={e => setFilter({query: e.target.value})} required value={filter.query || ''} name="search" id="search" type="search" className="search-bar__input" placeholder="Фильм"/>
                 <button onClick={handleSearchMovies} className="search-bar__button" type="submit">Поиск</button>
             </form>
             <span className={`search__error ${searchError ? 'search__error_active' : ""}`}>Нужно ввести ключевое слово</span>

@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 import MoviesListButton from "../MoviesListButton/MoviesListButton";
 
-const MoviesCardList = ({ moviesList }) => {
+const MoviesCardList = ({ moviesList, onPagination, limit, setLimit }) => {
 
     return (
         <>
@@ -14,9 +14,8 @@ const MoviesCardList = ({ moviesList }) => {
                     ))
                 }
             </ul>
-            { moviesList.length !== 0 &&
-                <MoviesListButton text="Ещё"/>
-            }
+                <MoviesListButton limit={limit} setLimit={setLimit} onPagination={onPagination} moviesList={moviesList} text="Ещё"/>
+
         </>
     )
 };

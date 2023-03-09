@@ -8,17 +8,17 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+const Movies = ({ limit, setLimit, onPagination, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
 
     return (
         <div className="page__container">
             <Header openBurgerMenu={openBurgerMenu}/>
             <main className="main">
                 <SearchForm onSearchForm={onSearchForm} filter={filter} setFilter={setFilter} />
-                <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} searchedMovies={searchedMovies}/>
+                <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
-                    : <MoviesCardList moviesList={searchedMovies} />
+                    : <MoviesCardList limit={limit} setLimit={setLimit} moviesList={searchedMovies} onPagination={onPagination} />
                 }
                 { error &&
                     <h2 className="movies-error">{error}</h2>
