@@ -1,14 +1,13 @@
 import React from 'react';
 import './MoviesListButton.css';
 
-const MoviesListButton = ({ text, onPagination, moviesList, initialMovies, limit, setLimit }) => {
+const MoviesListButton = ({ handlePagination, text, moviesList, initialMovies, shortMovies, checked }) => {
 
-    const handlePagination = () => {
-        setLimit(limit + 4);
-        onPagination();
-    }
     return (
-        moviesList.length !== 0 && <button onClick={() => handlePagination()} className="list-button">{text}</button>
+        moviesList.length !== 0 &&
+        (checked ? moviesList.length !== shortMovies.length
+        : moviesList.length !== initialMovies.length) &&
+        <button onClick={handlePagination} className="list-button">{text}</button>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Header from '../Header/Header';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import SearchForm from '../SearchForm/SearchForm';
@@ -8,7 +8,15 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ limit, setLimit, onPagination, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+const Movies = ({ shortMovies, screenSize, movies, limit, setLimit, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+
+    const handlePagination = () => {
+        if (screenSize === 1280) {
+            setLimit(limit + 4);
+        } else if (screenSize === 768 || (screenSize === 320)) {
+            setLimit(limit + 2);
+        }
+    }
 
     return (
         <div className="page__container">
@@ -18,7 +26,7 @@ const Movies = ({ limit, setLimit, onPagination, onFilterByCheckbox, checked, er
                 <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
-                    : <MoviesCardList limit={limit} setLimit={setLimit} moviesList={searchedMovies} onPagination={onPagination} />
+                    : <MoviesCardList shortMovies={shortMovies} checked={checked} initialMovies={movies} moviesList={searchedMovies} handlePagination={handlePagination} />
                 }
                 { error &&
                     <h2 className="movies-error">{error}</h2>
