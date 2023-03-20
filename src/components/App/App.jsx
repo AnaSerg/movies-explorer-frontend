@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContest";
 import './App.css';
+import ProtectedRoutes from "../ProtectedRoutes";
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -9,24 +11,70 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import MoviesApi from '../../utils/MoviesApi';
+import Api from '../../utils/MainApi';
+import * as apiAuth from '../../utils/apiAuth';
 
 const App = () => {
 
-  const [isBurgerMenuVisible, setBurgerMenuVisible] = useState(false);
-  const [error, setError] = useState('');
-  const [initialMovies, setInitialMovies] = useState([]); // отфильтрованные фильмы
-  const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим
+    const [currentUser, setCurrentUser] = useState({});
+    const [userData, setUserData] = useState({});
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    const navigation = useNavigate();
+
+    const [isBurgerMenuVisible, setBurgerMenuVisible] = useState(false);
+    const [error, setError] = useState('');
+    const [initialMovies, setInitialMovies] = useState([]); // отфильтрованные фильмы
+    const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим
     const [shortMovies, setShortMovies] = useState([]);
-  const [filter, setFilter] = useState({query: ''});
-  const [isMoviesLoading, setMoviesLoading] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [limit, setLimit] = useState(12);
-  const [screenSize, setScreenSize] = useState(1280);
+    const [filter, setFilter] = useState({query: ''});
+    const [isMoviesLoading, setMoviesLoading] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const [limit, setLimit] = useState(12);
+     const [screenSize, setScreenSize] = useState(1280);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
     const query = localStorage.getItem('query');
     const isChecked = JSON.parse(localStorage.getItem('checkbox'));
+
+    const auth = (jwt) => {
+        return apiAuth.getContent(jwt)
+            .then((res) => {
+                if (res) {
+                    setLoggedIn(true);
+                    setUserData({
+                        email: res.data.email,
+                        password: res.data.password
+                    })
+                }
+            })
+            .catch((err) => {
+                if (err.status === 400) {
+                    console.log('400 - токен не передан или передан не в том формате');
+                } else if (err.status === 401) {
+                    console.log('401 - переданный токен некорректен');
+                }
+            })
+    }
+
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
+            auth(jwt);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (loggedIn)  {
+            Api.getUserInfo()
+                .then((user) => {
+                    setCurrentUser(user.data)
+                    navigation('/movies');
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [loggedIn])
 
     useEffect(() => {
             if(query) {
@@ -123,60 +171,89 @@ const App = () => {
     setBurgerMenuVisible(true);
   }
 
+  const onRegister = ({name, email, password}) => {
+      return apiAuth.register(name, email, password)
+          .then((res) => {
+              if (res && !res.error) {
+                  navigation('/signin');
+              }
+          })
+          .catch((err) => {
+              setError('Что-то пошло не так')
+          })
+  }
+
+    const onLogin = ({email, password}) => {
+        return apiAuth.authorize(email, password)
+            .then((res) => {
+                if (res.token) {
+                    setLoggedIn(true);
+                    localStorage.setItem('jwt', res.token);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    };
 
   return (
-    <div className="page">
-        <Routes>
-          <Route
-              exact path="/"
-              element={<Main
-                  openBurgerMenu={openBurgerMenu}
-                  isBurgerMenuVisible={isBurgerMenuVisible}
-                  setBurgerMenuVisible={setBurgerMenuVisible}
-              />}
-          />
-          <Route
-              path="/movies"
-              element={<Movies
-                  isLoading={isMoviesLoading}
-                  isBurgerMenuVisible={isBurgerMenuVisible}
-                  setBurgerMenuVisible={setBurgerMenuVisible}
-                  filter={filter}
-                  setFilter={setFilter}
-                  searchedMovies={searchedMovies}
-                  openBurgerMenu={openBurgerMenu}
-                  onFilterByCheckbox={onFilterByCheckbox}
-                  checked={checked}
-                  onSearchForm={onSearchForm}
-                  error={error}
-                  limit={limit}
-                  setLimit={setLimit}
-                  movies={movies}
-                  screenSize={screenSize}
-                  shortMovies={shortMovies}
-              />}
-          />
-          <Route
-              path="/saved-movies"
-              element={<SavedMovies
-                  openBurgerMenu={openBurgerMenu}
-                  isBurgerMenuVisible={isBurgerMenuVisible}
-                  setBurgerMenuVisible={setBurgerMenuVisible}
-              />}
-          />
-          <Route
-              path="/profile"
-              element={<Profile
-                  openBurgerMenu={openBurgerMenu}
-                  isBurgerMenuVisible={isBurgerMenuVisible}
-                  setBurgerMenuVisible={setBurgerMenuVisible}
-              />}
-          />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/signin" element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-    </div>
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="page">
+            <Routes>
+                <Route element={<ProtectedRoutes loggedIn={loggedIn}/>}>
+                    <Route
+                        path="/movies"
+                        element={<Movies
+                            isLoading={isMoviesLoading}
+                            isBurgerMenuVisible={isBurgerMenuVisible}
+                            setBurgerMenuVisible={setBurgerMenuVisible}
+                            filter={filter}
+                            setFilter={setFilter}
+                            searchedMovies={searchedMovies}
+                            openBurgerMenu={openBurgerMenu}
+                            onFilterByCheckbox={onFilterByCheckbox}
+                            checked={checked}
+                            onSearchForm={onSearchForm}
+                            error={error}
+                            setError={setError}
+                            limit={limit}
+                            setLimit={setLimit}
+                            movies={movies}
+                            screenSize={screenSize}
+                            shortMovies={shortMovies}
+                        />}
+                    />
+                    <Route
+                        path="/saved-movies"
+                        element={<SavedMovies
+                            openBurgerMenu={openBurgerMenu}
+                            isBurgerMenuVisible={isBurgerMenuVisible}
+                            setBurgerMenuVisible={setBurgerMenuVisible}
+                        />}
+                    />
+                    <Route
+                        path="/profile"
+                        element={<Profile
+                            openBurgerMenu={openBurgerMenu}
+                            isBurgerMenuVisible={isBurgerMenuVisible}
+                            setBurgerMenuVisible={setBurgerMenuVisible}
+                        />}
+                    />
+                </Route>
+              <Route
+                  exact path="/"
+                  element={<Main
+                      openBurgerMenu={openBurgerMenu}
+                      isBurgerMenuVisible={isBurgerMenuVisible}
+                      setBurgerMenuVisible={setBurgerMenuVisible}
+                  />}
+              />
+              <Route path="/signup" element={<Register onRegister={onRegister} error={error}/>} />
+              <Route path="/signin" element={<Login onLogin={onLogin}/>} />
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+        </div>
+      </CurrentUserContext.Provider>
   );
 }
 

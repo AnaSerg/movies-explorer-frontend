@@ -1,57 +1,86 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Register.css';
 
-const Register = () => {
+const Register = ({onRegister, error}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [nameDirty, setNameDirty] = useState(false);
+    const [emailDirty, setEmailDirty] = useState(false);
+    const [passwordDirty, setPasswordDirty] = useState(false);
+    const [emailError, setEmailError] = useState('Обязательное поле');
+    const [nameError, setNameError] = useState('Обязательное поле');
+    const [passwordError, setPasswordError] = useState('Обязательное поле');
     const [isValid, setValid] = useState(false);
 
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
     useEffect(() => {
-        if(error || (!name || !regex.test(String(email).toLowerCase()) || !password)) {
+        if(emailError || nameError || passwordError) {
             setValid(false);
         } else {
             setValid(true);
         }
-    }, [error]);
+    }, [emailError, nameError, passwordError]);
+
+    const resetForm = useCallback(() => {
+        setEmail('');
+        setPassword('');
+        setName('');
+    }, []);
+
+    const handleRegistration = (e) => {
+        e.preventDefault();
+        onRegister({name, password, email});
+        resetForm();
+    }
+
+    const blurHandler = (e) => {
+        switch(e.target.name) {
+            case 'email':
+                setEmailDirty(true);
+                break
+            case 'nam':
+                setNameDirty(true);
+                break
+            case 'password':
+                setPasswordDirty(true);
+                break
+        }
+    }
 
     const emailHandler = (e) => {
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         setEmail(e.target.value);
         if(!regex.test(String(e.target.value).toLowerCase())) {
-            setError(true);
+            setEmailError('Некорректный e-mail');
+            if(!e.target.value) {
+                setEmailError('Обязательное поле');
+            }
         } else {
-            setError(false);
+            setEmailError('');
         };
     }
 
+
     const nameHandler = (e) => {
+        const regex = /^[а-яА-Яa-zA-ZЁёәіңғүұқөһӘІҢҒҮҰҚӨҺ\-\s]*$/;
         setName(e.target.value);
-        if(!e.target.value) {
-            setError(true);
+        if(!regex.test(String(e.target.value).toLowerCase())) {
+            setNameError('Некорректный формат имени');
+        } else if (!e.target.value) {
+            setNameError('Обязательное поле');
         } else {
-            setError(false);
+            setNameError('');
         }
     }
 
     const passwordHandler = (e) => {
         setPassword(e.target.value);
         if(!e.target.value) {
-            setError(true);
+            setPasswordError('Обязательное поле');
         } else {
-            setError(false);
-        }
-    }
-
-    const formError = () => {
-        if (!name || !password || !regex.test(email.toLowerCase())) {
-            setError(true);
-        } else {
-            setError(false);
+            setPasswordError('');
         }
     }
 
@@ -60,15 +89,18 @@ const Register = () => {
             <div className="register__container">
                 <Link to="/"><img className="register__logo" alt="логотип" src={Logo}></img></Link>
                 <h2 className="register__welcome">Добро пожаловать!</h2>
-                <form className="register__form" noValidate>
+                <form className="register__form" onSubmit={handleRegistration} noValidate>
                     <label className="register__label" htmlFor="name">Имя</label>
-                    <input className="register__input" id="name" required name="name" type="text" value={name} onChange={e => nameHandler(e)} />
+                    <input onBlur={(e) => blurHandler(e)} className="register__input" id="name" required name="nam" type="text" value={name} onChange={e => nameHandler(e)} />
+                    <div className={(nameDirty && nameError) ? "register__container-error register__container-error_active" : "register__container-error"}>{nameError}</div>
                     <label className="register__label" htmlFor="email">E-mail</label>
-                    <input className="register__input" id="email" required name="email" type="email" value={email} onChange={e => emailHandler(e)} />
+                    <input onBlur={(e) => blurHandler(e)} className="register__input" id="email" required name="email" type="email" value={email} onChange={e => emailHandler(e)} />
+                    <div className={(emailDirty && emailError) ? "register__container-error register__container-error_active" : "register__container-error"}>{emailError}</div>
                     <label className="register__label" htmlFor="password">Пароль</label>
-                    <input className="register__input" id="password" required name="password" type="password" value={password} onChange={e => passwordHandler(e)} />
-                    <span className={`register__error ${error ? 'register__error_active' : ""}`}>Что-то пошло не так...</span>
-                    <button onClick={formError} disabled={!isValid} type="submit" className={`register__button ${!isValid ? 'register__button_inactive' : ""}`}>Зарегистрироваться</button>
+                    <input onBlur={(e) => blurHandler(e)} className="register__input" id="password" required name="password" type="password" value={password} onChange={e => passwordHandler(e)} />
+                    <div className={(passwordDirty && passwordError) ? "register__container-error register__container-error_active" : "register__container-error"}>{passwordError}</div>
+                    <span className={ error ? "register__container-error register__container-error_active" : "register__container-error"}>{error}</span>
+                    <button disabled={!isValid} type="submit" className={`register__button ${!isValid ? 'register__button register__button_inactive' : ""}`}>Зарегистрироваться</button>
                 </form>
                 <div className="register__login-area">
                     <p className="register__reg-question">Уже зарегистрированы?</p>

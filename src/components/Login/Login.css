@@ -22,6 +22,20 @@
     min-width: 396px;
 }
 
+.login__container-error {
+    display: block;
+    height: 10px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0;
+    color: #fff;
+}
+
+.login__container-error_active {
+    color: #FF4062;
+}
+
 .login__form {
     display: flex;
     flex-direction: column;
@@ -87,6 +101,16 @@
 .login__button:hover {
     opacity: .8;
     transition: opacity .2s;
+}
+
+
+.login__button_inactive {
+    opacity: .6;
+    cursor: auto;
+}
+
+.login__button_inactive:hover {
+    opacity: .6;
 }
 
 .login__reg-area {
