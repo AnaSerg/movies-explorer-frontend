@@ -52,6 +52,22 @@
     background-image: url('../../images/deleteCard.svg');
 }
 
+.movies-card__delete {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+}
+
+.movies-card__delete:hover {
+    background-image: url('../../images/deleteCard.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+
 .movies-card__duration {
     border-top: 1px solid #E8E8E8;
     margin: 0;
@@ -60,6 +76,11 @@
     font-weight: 400;
     line-height: 1.18;
     color: #A0A0A0;
+}
+
+.movies-card__link {
+    text-decoration: none;
+    color: #000;
 }
 
 @media screen and (max-width: 850px) {

@@ -23,6 +23,7 @@ const App = () => {
     const navigation = useNavigate();
 
     const [isBurgerMenuVisible, setBurgerMenuVisible] = useState(false);
+    const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const [initialMovies, setInitialMovies] = useState([]); // отфильтрованные фильмы
     const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим
@@ -189,12 +190,29 @@ const App = () => {
                 if (res.token) {
                     setLoggedIn(true);
                     localStorage.setItem('jwt', res.token);
+                    navigation('/movies');
                 }
             })
             .catch((err) => {
                 console.log(err);
             })
     };
+
+    const onUpdateUser = (data) => {
+        return Api.sendUserInfo(data)
+            .then((data) => {
+                setSuccess('Данные обновлены');
+                setTimeout(() => {
+                    setSuccess('');
+                }, 1000);
+            })
+            .catch((err) => {
+                setError('Что-то пошло не так');
+                setTimeout(() => {
+                    setError('');
+                }, 1000);
+            })
+    }
 
   return (
       <CurrentUserContext.Provider value={currentUser}>
@@ -221,6 +239,7 @@ const App = () => {
                             movies={movies}
                             screenSize={screenSize}
                             shortMovies={shortMovies}
+                            loggedIn={loggedIn}
                         />}
                     />
                     <Route
@@ -237,6 +256,8 @@ const App = () => {
                             openBurgerMenu={openBurgerMenu}
                             isBurgerMenuVisible={isBurgerMenuVisible}
                             setBurgerMenuVisible={setBurgerMenuVisible}
+                            success={success}
+                            onUpdateUser={onUpdateUser}
                         />}
                     />
                 </Route>

@@ -1,8 +1,7 @@
 class Api {
-    constructor({ baseUrl, headers }, cardId) {
+    constructor({ baseUrl, headers }) {
         this._baseUrl = baseUrl;
         this._headers = headers;
-        this._cardId = cardId;
     }
 
     _handleResponse(res) {
@@ -13,16 +12,6 @@ class Api {
         }
     }
 
-    getInitialCards() {
-        return fetch(`${this._baseUrl}/cards`, {
-            method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(this._handleResponse);
-    }
 
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
@@ -38,76 +27,57 @@ class Api {
     sendUserInfo(data) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: data.name,
-                about: data.about,
+                email: data.email,
             })
         })
             .then(this._handleResponse);
     }
 
-    sendNewCard(data) {
-        return fetch(`${this._baseUrl}/cards`, {
+    getMovies() {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(this._handleResponse);
+    }
+
+    saveMovie(data) {
+        return fetch(`${this._baseUrl}/movies`, {
             method: 'POST',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: data.name,
-                link: data.link,
+                country: data.country,
+                director: data.director,
+                duration: data.duration,
+                year: data.year,
+                description: data.description,
+                image: data.image,
+                thumbnail: data.thumbnail,
+                trailerLink: data.trailerLink,
+                movieId: data.id,
+                nameRU: data.nameRU,
+                nameEn: data.nameEN
             })
         })
             .then(this._handleResponse);
     }
 
-    deleteCard(id) {
-        return fetch(`${this._baseUrl}/cards/${id}`, {
+    deleteMovie(id) {
+        return fetch(`${this._baseUrl}/movies/${id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 'Content-Type': 'application/json'
             },
-        })
-            .then(this._handleResponse);
-    }
-
-    changeLikeCardStatus(id, isLiked) {
-        if(isLiked) {
-            return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-                method: 'PUT',
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then(this._handleResponse);
-        } else {
-            return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-                method: 'DELETE',
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then(this._handleResponse);
-        }
-    }
-
-    sendAvatarInfo(data) {
-        return fetch(`${this._baseUrl}/users/me/avatar`, {
-            method: 'PATCH',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                avatar: data.avatar
-            })
         })
             .then(this._handleResponse);
     }

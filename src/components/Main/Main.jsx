@@ -9,11 +9,11 @@ import Footer from '../Footer/Footer';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './Main.css';
 
-const Main = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
+const Main = ({ loggedIn, openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
 
     return (
         <div className="page__container">
-            <Header openBurgerMenu={openBurgerMenu}/>
+            <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
                 <Promo />
                 <AboutProject title='О проекте'/>

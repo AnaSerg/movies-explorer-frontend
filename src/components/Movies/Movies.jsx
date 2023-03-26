@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ shortMovies, screenSize, movies, limit, setLimit, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+const Movies = ({ savedMovies, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, screenSize, movies, limit, setLimit, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
 
     const handlePagination = () => {
         if (screenSize === 1280) {
@@ -20,13 +20,13 @@ const Movies = ({ shortMovies, screenSize, movies, limit, setLimit, onFilterByCh
 
     return (
         <div className="page__container">
-            <Header openBurgerMenu={openBurgerMenu}/>
+            <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
                 <SearchForm onSearchForm={onSearchForm} filter={filter} setFilter={setFilter} />
                 <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
-                    : <MoviesCardList shortMovies={shortMovies} checked={checked} initialMovies={movies} moviesList={searchedMovies} handlePagination={handlePagination} />
+                    : <MoviesCardList savedMovies={savedMovies} onDeleteMovie={onDeleteMovie} onSaveMovie={onSaveMovie} shortMovies={shortMovies} checked={checked} initialMovies={movies} moviesList={searchedMovies} handlePagination={handlePagination} />
                 }
                 { error &&
                     <h2 className="movies-error">{error}</h2>

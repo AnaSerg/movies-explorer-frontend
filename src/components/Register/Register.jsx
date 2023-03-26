@@ -40,7 +40,7 @@ const Register = ({onRegister, error}) => {
             case 'email':
                 setEmailDirty(true);
                 break
-            case 'nam':
+            case 'name':
                 setNameDirty(true);
                 break
             case 'password':
@@ -91,7 +91,7 @@ const Register = ({onRegister, error}) => {
                 <h2 className="register__welcome">Добро пожаловать!</h2>
                 <form className="register__form" onSubmit={handleRegistration} noValidate>
                     <label className="register__label" htmlFor="name">Имя</label>
-                    <input onBlur={(e) => blurHandler(e)} className="register__input" id="name" required name="nam" type="text" value={name} onChange={e => nameHandler(e)} />
+                    <input onBlur={(e) => blurHandler(e)} className="register__input" id="name" required name="name" type="text" value={name} onChange={e => nameHandler(e)} />
                     <div className={(nameDirty && nameError) ? "register__container-error register__container-error_active" : "register__container-error"}>{nameError}</div>
                     <label className="register__label" htmlFor="email">E-mail</label>
                     <input onBlur={(e) => blurHandler(e)} className="register__input" id="email" required name="email" type="email" value={email} onChange={e => emailHandler(e)} />
