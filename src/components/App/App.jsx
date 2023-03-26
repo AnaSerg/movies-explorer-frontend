@@ -28,6 +28,7 @@ const App = () => {
     const [initialMovies, setInitialMovies] = useState([]); // отфильтрованные фильмы
     const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим
     const [shortMovies, setShortMovies] = useState([]);
+    const [savedMovies, setSavedMovies] = useState([]);
     const [filter, setFilter] = useState({query: ''});
     const [isMoviesLoading, setMoviesLoading] = useState(false);
     const [checked, setChecked] = useState(false);
@@ -98,6 +99,16 @@ const App = () => {
             window.removeEventListener('resize', handleWindowResize);
         };
     });
+
+    useEffect(() => {
+        Api.getMovies()
+            .then((data) => {
+                setSavedMovies(data.data);
+            })
+            .catch((err) => {
+                 console.log(err);
+            })
+    }, []);
 
 
     useEffect(() => {
@@ -214,6 +225,26 @@ const App = () => {
             })
     }
 
+    const onSaveMovie = (data) => {
+        Api.saveMovie(data)
+            .then((newMovie) => {
+                setSavedMovies([newMovie.data, ...savedMovies]);
+            })
+            .catch((err) => [
+                console.log(err)
+            ])
+    }
+
+    const onDeleteMovie = (id) => {
+        Api.deleteMovie(id)
+            .then((delMovie) => {
+                setSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
   return (
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
@@ -240,6 +271,9 @@ const App = () => {
                             screenSize={screenSize}
                             shortMovies={shortMovies}
                             loggedIn={loggedIn}
+                            onSaveMovie={onSaveMovie}
+                            onDeleteMovie={onDeleteMovie}
+                            savedMovies={savedMovies}
                         />}
                     />
                     <Route
@@ -248,6 +282,29 @@ const App = () => {
                             openBurgerMenu={openBurgerMenu}
                             isBurgerMenuVisible={isBurgerMenuVisible}
                             setBurgerMenuVisible={setBurgerMenuVisible}
+                            loggedIn={loggedIn}
+
+                            isLoading={isMoviesLoading}
+                            isBurgerMenuVisible={isBurgerMenuVisible}
+                            setBurgerMenuVisible={setBurgerMenuVisible}
+                            filter={filter}
+                            setFilter={setFilter}
+                            searchedMovies={searchedMovies}
+                            openBurgerMenu={openBurgerMenu}
+                            onFilterByCheckbox={onFilterByCheckbox}
+                            checked={checked}
+                            onSearchForm={onSearchForm}
+                            error={error}
+                            setError={setError}
+                            limit={limit}
+                            setLimit={setLimit}
+                            movies={movies}
+                            screenSize={screenSize}
+                            shortMovies={shortMovies}
+                            loggedIn={loggedIn}
+                            onSaveMovie={onSaveMovie}
+                            onDeleteMovie={onDeleteMovie}
+                            savedMovies={savedMovies}
                         />}
                     />
                     <Route
@@ -258,6 +315,7 @@ const App = () => {
                             setBurgerMenuVisible={setBurgerMenuVisible}
                             success={success}
                             onUpdateUser={onUpdateUser}
+                            loggedIn={loggedIn}
                         />}
                     />
                 </Route>
@@ -267,6 +325,7 @@ const App = () => {
                       openBurgerMenu={openBurgerMenu}
                       isBurgerMenuVisible={isBurgerMenuVisible}
                       setBurgerMenuVisible={setBurgerMenuVisible}
+                      loggedIn={loggedIn}
                   />}
               />
               <Route path="/signup" element={<Register onRegister={onRegister} error={error}/>} />
