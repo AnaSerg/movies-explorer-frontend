@@ -32,7 +32,7 @@ const Register = ({onRegister, error}) => {
     const handleRegistration = (e) => {
         e.preventDefault();
         onRegister({name, password, email});
-        resetForm();
+        //resetForm();
     }
 
     const blurHandler = (e) => {

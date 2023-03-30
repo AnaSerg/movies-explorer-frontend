@@ -2,8 +2,7 @@ import React, { useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, duration, nameEN, nameRU, country, director, year, description, trailerLink, thumbnail, ownerId, id }) => {
-    const { pathname } = useLocation();
+const MoviesCard = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, image, title, duration, nameEN, nameRU, country, director, year, description, trailerLink, thumbnail, ownerId, id }) => {
     const [isLiked, setLike] = useState(false);
 
     const location = useLocation();
@@ -12,18 +11,12 @@ const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, dur
     const minutes = duration % 60;
 
     React.useEffect(() => {
-        if(savedMovies) {
-            savedMovies.forEach((movie) => {
+        if(savedInitialMovies) {
+            savedInitialMovies.forEach((movie) => {
                 if(movie.movieId === id) {
                     setLike(true);
                 }
             })
-        }
-    }, []);
-
-    React.useEffect(() => {
-        if(location.pathname === '/saved-movies') {
-            setLike(true);
         }
     }, []);
 
@@ -34,7 +27,7 @@ const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, dur
             onSaveMovie({ownerId, country, director, nameRU, nameEN, year, description, trailerLink, thumbnail, duration, id, image })
         } else {
             setLike(false);
-            savedMovies.forEach((movie) => {
+            savedInitialMovies.forEach((movie) => {
                 if(movie.movieId === id) {
                     onDeleteMovie(movie._id);
                 }

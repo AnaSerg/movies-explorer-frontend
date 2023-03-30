@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Login.css';
 
-const Login = ({onLogin}) => {
+const Login = ({onLogin, error}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailDirty, setEmailDirty] = useState(false);
@@ -25,10 +25,10 @@ const Login = ({onLogin}) => {
         setPassword('');
     }, []);
 
-    const handleRegistration = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         onLogin({password, email});
-        resetForm();
+        //resetForm();
     }
 
     const blurHandler = (e) => {
@@ -69,14 +69,14 @@ const Login = ({onLogin}) => {
             <div className="login__container">
                 <Link to="/"><img className="login__logo" alt="логотип" src={Logo}></img></Link>
                 <h2 className="login__welcome">Рады видеть!</h2>
-                <form onSubmit={handleRegistration} className="login__form" noValidate>
+                <form onSubmit={handleLogin} className="login__form" noValidate>
                     <label className="login__label" htmlFor="email">E-mail</label>
                     <input onBlur={(e) => blurHandler(e)} className="login__input" id="email" required name="email" type="email" value={email} onChange={e => emailHandler(e)} />
                     <div className={(emailDirty && emailError) ? "login__container-error login__container-error_active" : "login__container-error"}>{emailError}</div>
                     <label className="login__label" htmlFor="password">Пароль</label>
                     <input onBlur={(e) => blurHandler(e)} className="login__input" id="password" required name="password" type="password" value={password} onChange={e => passwordHandler(e)} />
                     <div className={(passwordDirty && passwordError) ? "register__container-error register__container-error_active" : "register__container-error"}>{passwordError}</div>
-                    <span className="login__error">Что-то пошло не так...</span>
+                    <div className={error ? "login__error login__error_active" : "login__error"}>{error}</div>
                     <button disabled={!isValid} type="submit" className={`login__button ${!isValid ? 'login__button login__button_inactive' : ""}`}>Войти</button>
                 </form>
                 <div className="login__reg-area">

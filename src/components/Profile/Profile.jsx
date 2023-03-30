@@ -13,12 +13,12 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
     const [isValid, setValid] = useState(false);
 
     useEffect(() => {
-        if(emailError || nameError) {
+        if(currentUser.email === email || currentUser.name === name || emailError || nameError) {
             setValid(false);
         } else {
             setValid(true);
         }
-    }, [emailError, nameError]);
+    }, [emailError, nameError, email, name]);
 
     const handleUpdateUser = (e) => {
         e.preventDefault();
@@ -80,7 +80,7 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
                     <div className={success.length !== 0 ? "profile__container-success profile__container-success_active" : "profile__container-success"}>
                         {success}
                     </div>
-                    <div className={success.length !== 0 ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
+                    <div className={error ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
                         {error}
                     </div>
                 </form>

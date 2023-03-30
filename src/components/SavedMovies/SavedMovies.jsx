@@ -8,13 +8,13 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './SavedMovies.css';
 
-const SavedMovies = ({ savedSearchedMovies, savedMovies, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, movies, onFilterByCheckbox, checked, error, onSearchFormSaved, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+const SavedMovies = ({ savedInitialMovies, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, movies, onFilterByCheckbox, checked, error, onSearchFormSaved, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filterSaved, setFilterSaved}) => {
 
     return (
         <div className="page__container">
             <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
-                <SearchForm onSearchForm={onSearchFormSaved} filter={filter} setFilter={setFilter} />
+                <SearchForm onSearchForm={onSearchFormSaved} filter={filterSaved} setFilter={setFilterSaved} />
                 <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
@@ -24,11 +24,8 @@ const SavedMovies = ({ savedSearchedMovies, savedMovies, onSaveMovie,onDeleteMov
                         shortMovies={shortMovies}
                         checked={checked}
                         initialMovies={movies}
-                        moviesList={savedMovies}
+                        moviesList={savedInitialMovies}
                        />
-                }
-                { error &&
-                    <h2 className="movies-error">{error}</h2>
                 }
 
                 <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>

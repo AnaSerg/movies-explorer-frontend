@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {useLocation} from "react-router-dom";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 import MoviesListButton from "../MoviesListButton/MoviesListButton";
-import {CurrentUserContext} from "../../contexts/CurrentUserContest";
 
-const MoviesCardList = ({ savedMovies, onSaveMovie, onDeleteMovie, checked, initialMovies, moviesList, handlePagination, shortMovies }) => {
+const MoviesCardList = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, checked, initialMovies, moviesList, handlePagination, shortMovies }) => {
 
     const location = useLocation();
 
@@ -31,27 +30,28 @@ const MoviesCardList = ({ savedMovies, onSaveMovie, onDeleteMovie, checked, init
                                 image={'https://api.nomoreparties.co' + movie.image.url}
                                 onSaveMovie={onSaveMovie}
                                 onDeleteMovie={onDeleteMovie}
-                                savedMovies={savedMovies}
+                                savedInitialMovies={savedInitialMovies}
                             />
                         </li>
                     ))
                 }
                 {location.pathname === '/saved-movies' && moviesList.length !== 0 &&
                     moviesList.map((movie) => (
-                        <li key={movie.movieId} className="movies-list__item">
+                        <li key={movie._id} className="movies-list__item">
                             <MoviesCard
                                 title={movie.nameRU || movie.nameEn}
                                 duration={movie.duration}
                                 image={movie.image}
                                 onDeleteMovie={onDeleteMovie}
-                                savedMovies={savedMovies}
+                                savedInitialMovies={savedInitialMovies}
+                                trailerLink={movie.trailerLink}
                                 id={movie._id}
                             />
                         </li>
                     ))
                 }
             </ul>
-                <MoviesListButton savedMovies={savedMovies} shortMovies={shortMovies} moviesList={moviesList} handlePagination={handlePagination} initialMovies={initialMovies} checked={checked} text="Ещё"/>
+                <MoviesListButton shortMovies={shortMovies} moviesList={moviesList} handlePagination={handlePagination} initialMovies={initialMovies} checked={checked} text="Ещё"/>
 
         </>
     )
