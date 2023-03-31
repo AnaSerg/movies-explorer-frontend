@@ -37,11 +37,10 @@ const App = () => {
     const [checked, setChecked] = useState(false);
     const [checkedSaved, setCheckedSaved] = useState(false);
     const [limit, setLimit] = useState(12);
-     const [screenSize, setScreenSize] = useState(1280);
+    const [screenSize, setScreenSize] = useState(1280);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
-    const query = localStorage.getItem('query');
     const isChecked = JSON.parse(localStorage.getItem('checkbox'));
 
     const auth = (jwt) => {
@@ -73,19 +72,15 @@ const App = () => {
 
     useEffect(() => {
         if (loggedIn)  {
-            Api.getUserInfo()
-                .then((user) => {
+            Promise.all([Api.getMovies(), Api.getUserInfo()])
+                .then(([movies, user]) => {
+                    setSavedMovies(movies.data);
+                    setInitialSavedMovies(movies.data);
                     setCurrentUser(user.data)
                 })
                 .catch((err) => console.log(err))
         }
     }, [loggedIn])
-
-    useEffect(() => {
-            if(query) {
-                setFilter({query: query});
-            }
-    }, []);
 
     useEffect(() => {
         onGetScreenSize();
@@ -104,18 +99,6 @@ const App = () => {
     });
 
     useEffect(() => {
-        Api.getMovies()
-            .then((data) => {
-                setSavedMovies(data.data);
-                setInitialSavedMovies(data.data);
-            })
-            .catch((err) => {
-                 console.log(err);
-            })
-    }, []);
-
-
-    useEffect(() => {
         if(movies) {
             if(isChecked) {
                 setChecked(true);
@@ -123,8 +106,6 @@ const App = () => {
             onPaginateMovies(movies);
         }
     }, [isChecked, limit]);
-
-
 
     const onGetScreenSize = () => {
         if (windowWidth <= 1280 && windowWidth > 768) {
@@ -321,7 +302,6 @@ const App = () => {
                             setBurgerMenuVisible={setBurgerMenuVisible}
                             filterSaved={filterSaved}
                             setFilterSaved={setFilterSaved}
-                            searchedMovies={searchedMovies}
                             openBurgerMenu={openBurgerMenu}
                             onFilterByCheckboxSaved={onFilterByCheckboxSaved}
                             checkedSaved={checkedSaved}
@@ -330,11 +310,7 @@ const App = () => {
                             setError={setError}
                             limit={limit}
                             setLimit={setLimit}
-                            movies={movies}
-                            screenSize={screenSize}
-                            shortMovies={shortMovies}
                             loggedIn={loggedIn}
-                            onSaveMovie={onSaveMovie}
                             onDeleteMovie={onDeleteMovie}
                             savedMovies={savedMovies}
                             setSavedMovies={setSavedMovies}

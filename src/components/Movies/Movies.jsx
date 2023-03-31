@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '../Header/Header';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import SearchForm from '../SearchForm/SearchForm';
@@ -8,7 +8,43 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ savedInitialMovies, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, screenSize, movies, limit, setLimit, onFilterByCheckbox, checked, error, onSearchForm, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filter, setFilter}) => {
+const Movies = (
+    {
+        loggedIn,
+        savedInitialMovies,
+        onSaveMovie,
+        onDeleteMovie,
+        shortMovies,
+        screenSize,
+        movies,
+        limit,
+        setLimit,
+        filter,
+        setFilter,
+        onFilterByCheckbox,
+        checked,
+        error,
+        setError,
+        onSearchForm,
+        searchedMovies,
+        isBurgerMenuVisible,
+        setBurgerMenuVisible,
+        openBurgerMenu,
+        isLoading,
+    }) => {
+    const query = localStorage.getItem('query');
+
+    React.useEffect(() => {
+        if(query) {
+            setFilter({query: query});
+        }
+        if(movies.length === 0) {
+            setError('Ничего не найдено');
+        } else {
+            setError('');
+        }
+    }, []);
+
     const handlePagination = () => {
         if (screenSize === 1280) {
             setLimit(limit + 4);

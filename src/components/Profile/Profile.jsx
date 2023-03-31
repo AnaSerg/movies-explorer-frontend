@@ -49,7 +49,7 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
         } else if (!e.target.value) {
             setNameError('Обязательное поле');
         } else if (e.target.value === currentUser.name) {
-                setNameError('Имя не должен совпадать с предыдущим');
+                setNameError('Имя не должно совпадать с предыдущим');
         } else {
             setNameError('');
         }

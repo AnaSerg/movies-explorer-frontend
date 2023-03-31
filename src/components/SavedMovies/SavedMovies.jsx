@@ -8,12 +8,32 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './SavedMovies.css';
 
-const SavedMovies = ({ savedInitialMovies, setFilteredMovies, setSavedMovies, checkedSaved, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, movies, savedMovies, onFilterByCheckboxSaved, checked, error, onSearchFormSaved, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filterSaved, setFilterSaved}) => {
+const SavedMovies = (
+    {
+        savedInitialMovies,
+        setFilteredMovies,
+        setSavedMovies,
+        checkedSaved,
+        onDeleteMovie,
+        loggedIn,
+        savedMovies,
+        onFilterByCheckboxSaved,
+        setError,
+        error,
+        onSearchFormSaved,
+        openBurgerMenu,
+        isBurgerMenuVisible,
+        setBurgerMenuVisible,
+        isLoading,
+        filterSaved,
+        setFilterSaved
+    }) => {
 
     React.useEffect(() => {
         setSavedMovies(savedInitialMovies);
         setFilterSaved({query: ''});
         setFilteredMovies(savedInitialMovies);
+        setError('');
     }, [])
 
     return (
@@ -21,20 +41,19 @@ const SavedMovies = ({ savedInitialMovies, setFilteredMovies, setSavedMovies, ch
             <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
                 <SearchForm onSearchForm={onSearchFormSaved} filter={filterSaved} setFilter={setFilterSaved} />
-                <Checkbox onFilterByCheckbox={onFilterByCheckboxSaved} text="Короткометражки" checked={checked} />
+                <Checkbox onFilterByCheckbox={onFilterByCheckboxSaved} text="Короткометражки" checked={checkedSaved} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
                     : <MoviesCardList
                         onDeleteMovie={onDeleteMovie}
-                        onSaveMovie={onSaveMovie}
-                        shortMovies={shortMovies}
                         savedMovies={savedMovies}
                         checked={checkedSaved}
-                        initialMovies={movies}
                         moviesList={savedMovies}
                        />
                 }
-
+                { error &&
+                    <h2 className="movies-error">{error}</h2>
+                }
                 <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
             </main>
             <Footer />
