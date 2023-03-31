@@ -30,10 +30,12 @@ const App = () => {
     const [shortMovies, setShortMovies] = useState([]);
     const [initialSavedMovies, setInitialSavedMovies] = useState([]);
     const [savedMovies, setSavedMovies] = useState([]);
+    const [filteredMovies, setFilteredMovies] = useState([]);
     const [filter, setFilter] = useState({query: ''});
     const [filterSaved, setFilterSaved] = useState({query: ''});
     const [isMoviesLoading, setMoviesLoading] = useState(false);
     const [checked, setChecked] = useState(false);
+    const [checkedSaved, setCheckedSaved] = useState(false);
     const [limit, setLimit] = useState(12);
      const [screenSize, setScreenSize] = useState(1280);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -149,6 +151,16 @@ const App = () => {
       localStorage.setItem('checkbox', JSON.stringify(!checked));
   }
 
+    const onFilterByCheckboxSaved = () => {
+        setCheckedSaved(!checkedSaved);
+        if(checkedSaved) {
+            setSavedMovies(filteredMovies);
+        } else {
+            const shortMovies = filteredMovies.filter(movie => movie.duration <= 40);
+            setSavedMovies(shortMovies);
+        }
+    }
+
   const onPaginateMovies = (movies) => {
         setShortMovies(movies.filter(movie => movie.duration <= 40));
         setInitialMovies(movies);
@@ -158,6 +170,15 @@ const App = () => {
             setSearchedMovies(movies.slice(0, limit));
         }
   }
+
+    const onPaginateSavedMovies = (movies) => {
+        const shortMovies = movies.filter(movie => movie.duration <= 40);
+        if(checkedSaved) {
+            setSavedMovies(shortMovies);
+        } else {
+            setSavedMovies(movies);
+        }
+    }
 
   const onSearchForm = () => {
       setMoviesLoading(true);
@@ -181,6 +202,17 @@ const App = () => {
               setMoviesLoading(false);
           })
   }
+
+    const onSearchFormSaved = () => {
+        const filteredMovies = initialSavedMovies.filter(
+            movie =>
+                movie.nameRU.toLowerCase().includes(filterSaved.query.toLowerCase())
+                || movie.nameEn.toLowerCase().includes(filterSaved.query.toLowerCase())
+        );
+        filteredMovies.length === 0 && setError('Ничего не найдено');
+        setFilteredMovies(filteredMovies);
+        onPaginateSavedMovies(filteredMovies);
+    }
   const openBurgerMenu = () => {
     setBurgerMenuVisible(true);
   }
@@ -242,6 +274,7 @@ const App = () => {
             .then((delMovie) => {
                 setInitialSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
                 setSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
+                setFilteredMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
             })
             .catch((err) => {
                 console.log(err);
@@ -290,9 +323,9 @@ const App = () => {
                             setFilterSaved={setFilterSaved}
                             searchedMovies={searchedMovies}
                             openBurgerMenu={openBurgerMenu}
-                            onFilterByCheckbox={onFilterByCheckbox}
-                            checked={checked}
-                            onSearchForm={onSearchForm}
+                            onFilterByCheckboxSaved={onFilterByCheckboxSaved}
+                            checkedSaved={checkedSaved}
+                            onSearchFormSaved={onSearchFormSaved}
                             error={error}
                             setError={setError}
                             limit={limit}
@@ -304,6 +337,8 @@ const App = () => {
                             onSaveMovie={onSaveMovie}
                             onDeleteMovie={onDeleteMovie}
                             savedMovies={savedMovies}
+                            setSavedMovies={setSavedMovies}
+                            setFilteredMovies={setFilteredMovies}
                             savedInitialMovies={initialSavedMovies}
                         />}
                     />

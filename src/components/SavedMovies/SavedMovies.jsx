@@ -8,23 +8,30 @@ import Footer from '../Footer/Footer';
 import { Preloader } from '../UI/preloader/Preloader';
 import './SavedMovies.css';
 
-const SavedMovies = ({ savedInitialMovies, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, movies, onFilterByCheckbox, checked, error, onSearchFormSaved, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filterSaved, setFilterSaved}) => {
+const SavedMovies = ({ savedInitialMovies, setFilteredMovies, setSavedMovies, checkedSaved, onSaveMovie,onDeleteMovie,  loggedIn, shortMovies, movies, savedMovies, onFilterByCheckboxSaved, checked, error, onSearchFormSaved, openBurgerMenu, searchedMovies, isBurgerMenuVisible, setBurgerMenuVisible, isLoading, filterSaved, setFilterSaved}) => {
+
+    React.useEffect(() => {
+        setSavedMovies(savedInitialMovies);
+        setFilterSaved({query: ''});
+        setFilteredMovies(savedInitialMovies);
+    }, [])
 
     return (
         <div className="page__container">
             <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
                 <SearchForm onSearchForm={onSearchFormSaved} filter={filterSaved} setFilter={setFilterSaved} />
-                <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
+                <Checkbox onFilterByCheckbox={onFilterByCheckboxSaved} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
                     : <MoviesCardList
                         onDeleteMovie={onDeleteMovie}
                         onSaveMovie={onSaveMovie}
                         shortMovies={shortMovies}
-                        checked={checked}
+                        savedMovies={savedMovies}
+                        checked={checkedSaved}
                         initialMovies={movies}
-                        moviesList={savedInitialMovies}
+                        moviesList={savedMovies}
                        />
                 }
 
