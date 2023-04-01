@@ -76,7 +76,7 @@ const App = () => {
                 .then(([movies, user]) => {
                     setSavedMovies(movies.data);
                     setInitialSavedMovies(movies.data);
-                    setCurrentUser(user.data)
+                    setCurrentUser(user.data);
                 })
                 .catch((err) => console.log(err))
         }
@@ -262,6 +262,12 @@ const App = () => {
             })
     }
 
+    const onSignOut = () => {
+        setLoggedIn(false);
+        localStorage.removeItem('jwt');
+        navigation('/');
+    }
+
   return (
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
@@ -327,6 +333,7 @@ const App = () => {
                             success={success}
                             onUpdateUser={onUpdateUser}
                             loggedIn={loggedIn}
+                            onSignOut={onSignOut}
                         />}
                     />
                 </Route>
