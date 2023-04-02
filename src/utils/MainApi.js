@@ -84,7 +84,7 @@ class Api {
 }
 
 export default new Api ({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://api.movies-backend.nomoredomains.club/',
     headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json'
