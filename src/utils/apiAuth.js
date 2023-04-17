@@ -1,12 +1,4 @@
-export const BASE_URL = 'https://api.movies-backend.nomoredomains.club/';
-
-const handleResponse = (res) => {
-    if (res.ok) {
-        return res.json();
-    } else {
-        return Promise.reject(`произошла ошибка`);
-    }
-}
+export const BASE_URL = 'http://localhost:3000';
 
 export const register = (name, email, password) => {
     return fetch(`${BASE_URL}/signup`, {
@@ -17,7 +9,17 @@ export const register = (name, email, password) => {
         },
         body: JSON.stringify({name, email, password})
     })
-        .then((response) => handleResponse(response))
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                if(res.status === 409) {
+                    return Promise.reject('Пользователь с таким email уже существует');
+                } else {
+                    return Promise.reject('При регистрации пользователя произошла ошибка.');
+                }
+            }
+        })
 };
 
 export const authorize = (email, password) => {
@@ -27,10 +29,19 @@ export const authorize = (email, password) => {
             'Accept': 'application/json',
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify({
+            email,
+            password
+        })
     })
-        .then((response) => handleResponse(response))
-};
+      .then((res) => {
+          if (res.ok) {
+              return res.json();
+          } else {
+              return Promise.reject('Вы ввели неправильный логин или пароль.');
+          }
+      })
+}
 
 export const getContent = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
@@ -41,5 +52,11 @@ export const getContent = (token) => {
             authorization: `Bearer ${token}`,
         },
     })
-        .then((response) => handleResponse(response))
+      .then((res) => {
+          if (res.ok) {
+              return res.json();
+          } else {
+              return Promise.reject('При авторизации произошла ошибка. Токен не передан или передан не в том формате');
+          }
+      })
 }

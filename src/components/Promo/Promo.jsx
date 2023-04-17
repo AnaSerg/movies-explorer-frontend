@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import AboutProject from '../AboutProject/AboutProject';
 import './Promo.css';
 import PromoImg from '../../images/landing-image.png';
 

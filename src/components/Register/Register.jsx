@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Register.css';
@@ -23,12 +23,6 @@ const Register = ({onRegister, error}) => {
         }
     }, [emailError, nameError, passwordError]);
 
-    const resetForm = useCallback(() => {
-        setEmail('');
-        setPassword('');
-        setName('');
-    }, []);
-
     const handleRegistration = (e) => {
         e.preventDefault();
         onRegister({name, password, email});
@@ -39,18 +33,20 @@ const Register = ({onRegister, error}) => {
         switch(e.target.name) {
             case 'email':
                 setEmailDirty(true);
-                break
+                break;
             case 'name':
                 setNameDirty(true);
-                break
+                break;
             case 'password':
                 setPasswordDirty(true);
-                break
+                break;
+            default:
+                console.log('eslint told me to add default case');
         }
     }
 
     const emailHandler = (e) => {
-        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         setEmail(e.target.value);
         if(!regex.test(String(e.target.value).toLowerCase())) {
             setEmailError('Некорректный e-mail');

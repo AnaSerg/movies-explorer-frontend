@@ -4,8 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 import MoviesListButton from "../MoviesListButton/MoviesListButton";
 
-const MoviesCardList = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, checked, initialMovies, moviesList, handlePagination, shortMovies }) => {
-
+const MoviesCardList = ({ savedMovies, onSaveMovie, onDeleteMovie, checked, initialMovies, moviesList, handlePagination, shortMovies }) => {
     const location = useLocation();
 
     return (
@@ -30,7 +29,7 @@ const MoviesCardList = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, checke
                                 image={'https://api.nomoreparties.co' + movie.image.url}
                                 onSaveMovie={onSaveMovie}
                                 onDeleteMovie={onDeleteMovie}
-                                savedInitialMovies={savedInitialMovies}
+                                savedMovies={savedMovies}
                             />
                         </li>
                     ))
@@ -43,7 +42,6 @@ const MoviesCardList = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, checke
                                 duration={movie.duration}
                                 image={movie.image}
                                 onDeleteMovie={onDeleteMovie}
-                                savedInitialMovies={savedInitialMovies}
                                 trailerLink={movie.trailerLink}
                                 id={movie._id}
                             />

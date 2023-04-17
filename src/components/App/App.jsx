@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContest";
 import './App.css';
 import ProtectedRoutes from "../ProtectedRoutes";
@@ -17,17 +17,13 @@ import * as apiAuth from '../../utils/apiAuth';
 const App = () => {
 
     const [currentUser, setCurrentUser] = useState({});
-    const [userData, setUserData] = useState({});
-
     const [loggedIn, setLoggedIn] = useState(false);
-    const navigation = useNavigate();
 
     const [isBurgerMenuVisible, setBurgerMenuVisible] = useState(false);
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const [initialMovies, setInitialMovies] = useState([]); // отфильтрованные фильмы
-    const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим
-    const [shortMovies, setShortMovies] = useState([]);
+    const [searchedMovies, setSearchedMovies] = useState([]); // фильмы, которые рендерим]
     const [initialSavedMovies, setInitialSavedMovies] = useState([]);
     const [savedMovies, setSavedMovies] = useState([]);
     const [filteredMovies, setFilteredMovies] = useState([]);
@@ -43,15 +39,18 @@ const App = () => {
     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
     const isChecked = JSON.parse(localStorage.getItem('checkbox'));
 
+    const {pathname} = useLocation();
+  const navigation = useNavigate();
+
     const auth = (jwt) => {
         return apiAuth.getContent(jwt)
             .then((res) => {
                 if (res) {
                     setLoggedIn(true);
-                    setUserData({
-                        email: res.data.email,
-                        password: res.data.password
-                    })
+                      setCurrentUser(res.data);
+                      ["/signin", "/signup"].includes(pathname)
+                      ? navigation("/movies")
+                      : navigation(pathname);
                 }
             })
             .catch((err) => {
@@ -68,19 +67,23 @@ const App = () => {
         if (jwt) {
             auth(jwt);
         }
-    }, []);
+    }, [loggedIn]);
 
     useEffect(() => {
         if (loggedIn)  {
+            setMoviesLoading(true);
             Promise.all([Api.getMovies(), Api.getUserInfo()])
                 .then(([movies, user]) => {
-                    setSavedMovies(movies.data);
-                    setInitialSavedMovies(movies.data);
-                    setCurrentUser(user.data);
+                    setSavedMovies(movies.data.filter((movie) => movie.owner === currentUser._id));
+                    setInitialSavedMovies(movies.data.filter((movie) => movie.owner === currentUser._id));
+                    localStorage.setItem('saved-movies', JSON.stringify(movies.data.filter((movie) => movie.owner === currentUser._id)));
                 })
                 .catch((err) => console.log(err))
+              .finally(() => {
+                setMoviesLoading(false);
+              })
         }
-    }, [loggedIn])
+    }, [currentUser])
 
     useEffect(() => {
         onGetScreenSize();
@@ -143,16 +146,16 @@ const App = () => {
     }
 
   const onPaginateMovies = (movies) => {
-        setShortMovies(movies.filter(movie => movie.duration <= 40));
+        const shortMovies = movies.filter(movie => movie.duration <= 40);
         setInitialMovies(movies);
         if(isChecked) {
-            setSearchedMovies(movies.filter(movie => movie.duration <= 40).slice(0, limit));
+            setSearchedMovies(shortMovies.slice(0, limit));
         } else {
             setSearchedMovies(movies.slice(0, limit));
         }
   }
 
-    const onPaginateSavedMovies = (movies) => {
+  const onPaginateSavedMovies = (movies) => {
         const shortMovies = movies.filter(movie => movie.duration <= 40);
         if(checkedSaved) {
             setSavedMovies(shortMovies);
@@ -206,7 +209,7 @@ const App = () => {
               }
           })
           .catch((err) => {
-              setError('Что-то пошло не так')
+            setError(err);
           })
   }
 
@@ -216,24 +219,24 @@ const App = () => {
                 if (res.token) {
                     setLoggedIn(true);
                     localStorage.setItem('jwt', res.token);
-                    navigation('/movies');
                 }
             })
             .catch((err) => {
-                console.log(err);
+              setError(err);
             })
     };
 
     const onUpdateUser = (data) => {
         return Api.sendUserInfo(data)
             .then((data) => {
+                setCurrentUser(data.data);
                 setSuccess('Данные обновлены');
                 setTimeout(() => {
                     setSuccess('');
                 }, 1000);
             })
             .catch((err) => {
-                setError('Что-то пошло не так');
+                setError(err);
                 setTimeout(() => {
                     setError('');
                 }, 1000);
@@ -243,7 +246,10 @@ const App = () => {
     const onSaveMovie = (data) => {
         Api.saveMovie(data)
             .then((newMovie) => {
+              console.log(currentUser._id);
                 setInitialSavedMovies([newMovie.data, ...initialSavedMovies]);
+                setSavedMovies([newMovie.data, ...savedMovies]);
+                localStorage.setItem('saved-movies', JSON.stringify([newMovie.data, ...savedMovies]));
             })
             .catch((err) => [
                 console.log(err)
@@ -256,6 +262,8 @@ const App = () => {
                 setInitialSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
                 setSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
                 setFilteredMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
+                const test = JSON.parse(localStorage.getItem('saved-movies'));
+                localStorage.setItem('saved-movies', JSON.stringify(test.filter((c) => c._id === id ? !delMovie.data : c)));
             })
             .catch((err) => {
                 console.log(err);
@@ -265,6 +273,10 @@ const App = () => {
     const onSignOut = () => {
         setLoggedIn(false);
         localStorage.removeItem('jwt');
+        localStorage.removeItem('query');
+        localStorage.removeItem('checkbox');
+        localStorage.removeItem('filteredMovies');
+        localStorage.removeItem('saved-movies');
         navigation('/');
     }
 
@@ -292,12 +304,10 @@ const App = () => {
                             setLimit={setLimit}
                             movies={movies}
                             screenSize={screenSize}
-                            shortMovies={shortMovies}
                             loggedIn={loggedIn}
                             onSaveMovie={onSaveMovie}
                             onDeleteMovie={onDeleteMovie}
                             savedMovies={savedMovies}
-                            savedInitialMovies={initialSavedMovies}
                         />}
                     />
                     <Route
@@ -311,6 +321,7 @@ const App = () => {
                             openBurgerMenu={openBurgerMenu}
                             onFilterByCheckboxSaved={onFilterByCheckboxSaved}
                             checkedSaved={checkedSaved}
+                            setCheckedSaved={setCheckedSaved}
                             onSearchFormSaved={onSearchFormSaved}
                             error={error}
                             setError={setError}
@@ -321,7 +332,7 @@ const App = () => {
                             savedMovies={savedMovies}
                             setSavedMovies={setSavedMovies}
                             setFilteredMovies={setFilteredMovies}
-                            savedInitialMovies={initialSavedMovies}
+                            initialSavedMovies={initialSavedMovies}
                         />}
                     />
                     <Route
@@ -347,7 +358,7 @@ const App = () => {
                   />}
               />
               <Route path="/signup" element={<Register onRegister={onRegister} error={error}/>} />
-              <Route path="/signin" element={<Login onLogin={onLogin}/>} />
+              <Route path="/signin" element={<Login onLogin={onLogin} error={error}/>} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
         </div>

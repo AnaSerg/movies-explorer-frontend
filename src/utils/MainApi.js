@@ -16,10 +16,7 @@ class Api {
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers
         })
             .then(this._handleResponse);
     }
@@ -33,16 +30,23 @@ class Api {
                 email: data.email,
             })
         })
-            .then(this._handleResponse);
+          .then((res) => {
+              if (res.ok) {
+                  return res.json();
+              } else {
+                  if(res.status === 409) {
+                      return Promise.reject('Пользователь с таким email уже существует');
+                  } else {
+                      return Promise.reject('При обновлении профиля произошла ошибка.');
+                  }
+              }
+          })
     }
 
     getMovies() {
         return fetch(`${this._baseUrl}/movies`, {
             method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers
         })
             .then(this._handleResponse);
     }
@@ -50,10 +54,7 @@ class Api {
     saveMovie(data) {
         return fetch(`${this._baseUrl}/movies`, {
             method: 'POST',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 country: data.country,
                 director: data.director,
@@ -74,17 +75,14 @@ class Api {
     deleteMovie(id) {
         return fetch(`${this._baseUrl}/movies/${id}`, {
             method: 'DELETE',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers
         })
             .then(this._handleResponse);
     }
 }
 
 export default new Api ({
-    baseUrl: 'https://api.movies-backend.nomoredomains.club/',
+    baseUrl: 'http://localhost:3000',
     headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json'

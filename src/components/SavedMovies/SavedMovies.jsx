@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import SearchForm from '../SearchForm/SearchForm';
@@ -10,8 +11,7 @@ import './SavedMovies.css';
 
 const SavedMovies = (
     {
-        savedInitialMovies,
-        setFilteredMovies,
+        initialSavedMovies,
         setSavedMovies,
         checkedSaved,
         onDeleteMovie,
@@ -26,15 +26,25 @@ const SavedMovies = (
         setBurgerMenuVisible,
         isLoading,
         filterSaved,
-        setFilterSaved
+        setFilterSaved,
+      setCheckedSaved
     }) => {
 
-    React.useEffect(() => {
-        setSavedMovies(savedInitialMovies);
-        setFilterSaved({query: ''});
-        setFilteredMovies(savedInitialMovies);
+    const {pathname} = useLocation();
+
+    useEffect(() => {
+      if(savedMovies && savedMovies.length === 0) {
+        setError('Ничего не найдено');
+      } else {
         setError('');
-    }, [])
+      }
+    }, [savedMovies]);
+
+    useEffect(() => {
+      setFilterSaved('');
+      setCheckedSaved(false);
+      setSavedMovies(initialSavedMovies);
+    }, [pathname])
 
     return (
         <div className="page__container">
@@ -46,9 +56,9 @@ const SavedMovies = (
                     ? <div className="movies-preloader"><Preloader /></div>
                     : <MoviesCardList
                         onDeleteMovie={onDeleteMovie}
-                        savedMovies={savedMovies}
                         checked={checkedSaved}
                         moviesList={savedMovies}
+                        savedMovies={savedMovies}
                        />
                 }
                 { error &&

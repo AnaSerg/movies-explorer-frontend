@@ -1,9 +1,11 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-const MoviesCard = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, image, title, duration, nameEN, nameRU, country, director, year, description, trailerLink, thumbnail, ownerId, id }) => {
+const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, duration, nameEN, nameRU, country, director, year, description, trailerLink, thumbnail, ownerId, id }) => {
     const [isLiked, setLike] = useState(false);
+    const savedMov = localStorage.getItem('saved-movies') && JSON.parse(localStorage.getItem('saved-movies'));
+
 
     const location = useLocation();
 
@@ -11,15 +13,14 @@ const MoviesCard = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, image, tit
     const minutes = duration % 60;
 
     React.useEffect(() => {
-        if(savedInitialMovies) {
-            savedInitialMovies.forEach((movie) => {
+        if(savedMov) {
+            savedMov.forEach((movie) => {
                 if(movie.movieId === id) {
                     setLike(true);
                 }
             })
         }
-    }, []);
-
+    }, [location.pathname]);
 
     function handleLikeClick() {
         if(!isLiked) {
@@ -27,7 +28,7 @@ const MoviesCard = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, image, tit
             onSaveMovie({ownerId, country, director, nameRU, nameEN, year, description, trailerLink, thumbnail, duration, id, image })
         } else {
             setLike(false);
-            savedInitialMovies.forEach((movie) => {
+            savedMov.forEach((movie) => {
                 if(movie.movieId === id) {
                     onDeleteMovie(movie._id);
                 }
@@ -42,7 +43,7 @@ const MoviesCard = ({ savedInitialMovies, onSaveMovie, onDeleteMovie, image, tit
 
     return (
         <div className="movies-card">
-            <a className="movies-card__link" href={trailerLink} target="_blank">
+            <a className="movies-card__link" href={trailerLink} rel="noreferrer" target="_blank">
                 <img className="movies-card__image" src={image} alt="обложка фильма"></img>
             </a>
             <div className="movies-card__description">

@@ -1,6 +1,5 @@
 import React from 'react';
 import './Portfolio.css';
-import Arrow from '../../images/arrow-link.svg';
 
 const Portfolio = () => {
     return (

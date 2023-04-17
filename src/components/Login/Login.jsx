@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Login.css';
@@ -20,11 +20,6 @@ const Login = ({onLogin, error}) => {
         }
     }, [emailError, passwordError]);
 
-    const resetForm = useCallback(() => {
-        setEmail('');
-        setPassword('');
-    }, []);
-
     const handleLogin = (e) => {
         e.preventDefault();
         onLogin({password, email});
@@ -35,15 +30,17 @@ const Login = ({onLogin, error}) => {
         switch(e.target.name) {
             case 'email':
                 setEmailDirty(true);
-                break
+                break;
             case 'password':
                 setPasswordDirty(true);
-                break
+                break;
+            default:
+                console.log('eslint told me to add default case');
         }
     }
 
     const emailHandler = (e) => {
-        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         setEmail(e.target.value);
         if(!regex.test(String(e.target.value).toLowerCase())) {
             setEmailError('Некорректный e-mail');

@@ -10,33 +10,45 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
     const [email, setEmail] = useState(currentUser.email);
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [isValid, setValid] = useState(false);
+    const [isValid, setValid] = useState(true);
+    const [disabled, setDisabled] = useState(false);
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        if(currentUser.email === email || currentUser.name === name || emailError || nameError) {
+        if(currentUser.email === email || emailError) {
             setValid(false);
         } else {
             setValid(true);
         }
-    }, [emailError, nameError, email, name]);
+    }, [emailError, email]);
 
-    const handleUpdateUser = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if(currentUser.name === name || nameError) {
+            setValid(false);
+        } else {
+            setValid(true);
+        }
+    }, [nameError, name]);
+
+    const handleUpdateUser = () => {
         onUpdateUser({name, email});
+        setDisabled(false);
+        setVisible(false);
     }
 
     const emailHandler = (e) => {
-        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         setEmail(e.target.value);
         if(!regex.test(String(e.target.value).toLowerCase())) {
             setEmailError('Некорректный e-mail');
             if(!e.target.value) {
                 setEmailError('Обязательное поле');
-            } else if (e.target.value === currentUser.email) {
-                setEmailError('Email не должен совпадать с предыдущим');
             }
         } else {
             setEmailError('');
+            if (e.target.value === currentUser.email) {
+                setEmailError('Email не должен совпадать с предыдущим');
+            }
         };
     }
 
@@ -55,15 +67,20 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
         }
     }
 
+    const handleClickEditButton = () => {
+        setDisabled(true);
+        setVisible(true);
+    }
+
     return (
         <div className='profile'>
             <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <BurgerMenu isBurgerMenuVisible={isBurgerMenuVisible} setBurgerMenuVisible={setBurgerMenuVisible}/>
             <div className="profile__content">
                 <h2 className="profile__greeting">Привет, {currentUser.name}!</h2>
-                <form className="profile__form" onSubmit={handleUpdateUser}>
+                <form className="profile__form">
                     <label className="profile__label">Имя
-                        <input className="profile__input" type="text" value={name} onChange={(e) => nameHandler(e)}/>
+                        <input disabled={!disabled} className={!disabled ? "profile__input profile__input_disabled" : "profile__input"} type="text" value={name} onChange={(e) => nameHandler(e)}/>
                     </label>
                     <div className={(nameError) ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
                         {nameError}
@@ -74,9 +91,6 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
                     <div className={(emailError) ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
                         {emailError}
                     </div>
-                    <button disabled={!isValid} type="submit" className={`profile__button ${!isValid ? 'profile__button register__button_inactive' : ""}`}>
-                        Редактировать
-                    </button>
                     <div className={success.length !== 0 ? "profile__container-success profile__container-success_active" : "profile__container-success"}>
                         {success}
                     </div>
@@ -84,7 +98,21 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
                         {error}
                     </div>
                 </form>
-                <button onClick={() => onSignOut()} className="profile__button-sign-out">Выйти из аккаунта</button>
+                <div className="profile__buttons-area">
+                    {!visible
+                        ?
+                          <>
+                              <button onClick={() => handleClickEditButton()} type="click" className="profile__button profile__button_edit">
+                                  Редактировать
+                              </button>
+                              <button onClick={() => onSignOut()} className="profile__button-sign-out">Выйти из аккаунта</button>
+                          </>
+                        :
+                            <button disabled={!isValid} onClick={handleUpdateUser} className={!isValid ? "profile__button profile__button_submit profile__button_submit-disabled" : "profile__button profile__button_submit"}>
+                            Сохранить
+                            </button>
+                    }
+                </div>
             </div>
         </div>
     );

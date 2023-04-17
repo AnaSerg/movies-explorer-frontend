@@ -11,7 +11,6 @@ import './Movies.css';
 const Movies = (
     {
         loggedIn,
-        savedInitialMovies,
         onSaveMovie,
         onDeleteMovie,
         shortMovies,
@@ -38,7 +37,7 @@ const Movies = (
         if(query) {
             setFilter({query: query});
         }
-        if(movies.length === 0) {
+        if(movies && movies.length === 0) {
             setError('Ничего не найдено');
         } else {
             setError('');
@@ -61,7 +60,7 @@ const Movies = (
                 <Checkbox onFilterByCheckbox={onFilterByCheckbox} text="Короткометражки" checked={checked} />
                 { isLoading
                     ? <div className="movies-preloader"><Preloader /></div>
-                    : <MoviesCardList savedInitialMovies={savedInitialMovies} onDeleteMovie={onDeleteMovie} onSaveMovie={onSaveMovie} shortMovies={shortMovies} checked={checked} initialMovies={movies} moviesList={searchedMovies} handlePagination={handlePagination} />
+                    : <MoviesCardList onDeleteMovie={onDeleteMovie} onSaveMovie={onSaveMovie} shortMovies={shortMovies} checked={checked} initialMovies={movies} moviesList={searchedMovies} handlePagination={handlePagination} />
                 }
                 { error &&
                     <h2 className="movies-error">{error}</h2>
