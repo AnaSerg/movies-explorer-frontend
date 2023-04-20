@@ -15,7 +15,6 @@ const Movies = (
         onDeleteMovie,
         shortMovies,
         screenSize,
-        movies,
         limit,
         setLimit,
         filter,
@@ -32,6 +31,7 @@ const Movies = (
         isLoading,
     }) => {
     const query = localStorage.getItem('query');
+    const movies = JSON.parse(localStorage.getItem('filteredMovies'));
 
     React.useEffect(() => {
         if(query) {

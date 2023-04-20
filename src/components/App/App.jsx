@@ -37,6 +37,7 @@ const App = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
+  const moviesSaved = JSON.parse(localStorage.getItem('saved-movies'));
     const isChecked = JSON.parse(localStorage.getItem('checkbox'));
 
     const {pathname} = useLocation();
@@ -138,9 +139,9 @@ const App = () => {
     const onFilterByCheckboxSaved = () => {
         setCheckedSaved(!checkedSaved);
         if(checkedSaved) {
-            setSavedMovies(filteredMovies);
+            setSavedMovies((filteredMovies.length !== 0 && filteredMovies) || (moviesSaved && moviesSaved));
         } else {
-            const shortMovies = filteredMovies.filter(movie => movie.duration <= 40);
+            const shortMovies = ((filteredMovies.length !== 0 && filteredMovies) || (moviesSaved && moviesSaved)).filter(movie => movie.duration <= 40);
             setSavedMovies(shortMovies);
         }
     }
@@ -166,6 +167,7 @@ const App = () => {
 
   const onSearchForm = () => {
       setMoviesLoading(true);
+      setError('');
       MoviesApi.getInitialMovies()
           .then(movies => {
               const filteredMovies = movies.filter(
@@ -246,7 +248,6 @@ const App = () => {
     const onSaveMovie = (data) => {
         Api.saveMovie(data)
             .then((newMovie) => {
-              console.log(currentUser._id);
                 setInitialSavedMovies([newMovie.data, ...initialSavedMovies]);
                 setSavedMovies([newMovie.data, ...savedMovies]);
                 localStorage.setItem('saved-movies', JSON.stringify([newMovie.data, ...savedMovies]));
@@ -277,6 +278,11 @@ const App = () => {
         localStorage.removeItem('checkbox');
         localStorage.removeItem('filteredMovies');
         localStorage.removeItem('saved-movies');
+        setFilter({query: ''});
+        setInitialMovies([]);
+        setSearchedMovies([]);
+        setInitialSavedMovies([]);
+        setSavedMovies([]);
         navigation('/');
     }
 
@@ -302,7 +308,6 @@ const App = () => {
                             setError={setError}
                             limit={limit}
                             setLimit={setLimit}
-                            movies={movies}
                             screenSize={screenSize}
                             loggedIn={loggedIn}
                             onSaveMovie={onSaveMovie}
@@ -357,8 +362,8 @@ const App = () => {
                       loggedIn={loggedIn}
                   />}
               />
-              <Route path="/signup" element={<Register onRegister={onRegister} error={error}/>} />
-              <Route path="/signin" element={<Login onLogin={onLogin} error={error}/>} />
+              <Route path="/signup" element={<Register onRegister={onRegister} error={error} setError={setError}/>} />
+              <Route path="/signin" element={<Login onLogin={onLogin} error={error} setError={setError}/>} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
         </div>

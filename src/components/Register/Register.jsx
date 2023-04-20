@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Register.css';
 
-const Register = ({onRegister, error}) => {
+const Register = ({onRegister, error, setError}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,10 +23,13 @@ const Register = ({onRegister, error}) => {
         }
     }, [emailError, nameError, passwordError]);
 
+    useEffect(() => {
+        setError('');
+    }, []);
+
     const handleRegistration = (e) => {
         e.preventDefault();
         onRegister({name, password, email});
-        //resetForm();
     }
 
     const blurHandler = (e) => {
@@ -95,7 +98,7 @@ const Register = ({onRegister, error}) => {
                     <label className="register__label" htmlFor="password">Пароль</label>
                     <input onBlur={(e) => blurHandler(e)} className="register__input" id="password" required name="password" type="password" value={password} onChange={e => passwordHandler(e)} />
                     <div className={(passwordDirty && passwordError) ? "register__container-error register__container-error_active" : "register__container-error"}>{passwordError}</div>
-                    <span className={ error ? "register__container-error register__container-error_active" : "register__container-error"}>{error}</span>
+                    <div className={ error ? "register__container-error register__container-error_active" : "register__container-error"}>{String(error)}</div>
                     <button disabled={!isValid} type="submit" className={`register__button ${!isValid ? 'register__button register__button_inactive' : ""}`}>Зарегистрироваться</button>
                 </form>
                 <div className="register__login-area">

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import './Login.css';
 
-const Login = ({onLogin, error}) => {
+const Login = ({onLogin, error, setError}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailDirty, setEmailDirty] = useState(false);
@@ -19,6 +19,10 @@ const Login = ({onLogin, error}) => {
             setValid(true);
         }
     }, [emailError, passwordError]);
+
+    useEffect(() => {
+        setError('');
+    }, []);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -73,7 +77,7 @@ const Login = ({onLogin, error}) => {
                     <label className="login__label" htmlFor="password">Пароль</label>
                     <input onBlur={(e) => blurHandler(e)} className="login__input" id="password" required name="password" type="password" value={password} onChange={e => passwordHandler(e)} />
                     <div className={(passwordDirty && passwordError) ? "register__container-error register__container-error_active" : "register__container-error"}>{passwordError}</div>
-                    <div className={error ? "login__error login__error_active" : "login__error"}>{error}</div>
+                    <div className={error ? "login__error login__error_active" : "login__error"}>{String(error)}</div>
                     <button disabled={!isValid} type="submit" className={`login__button ${!isValid ? 'login__button login__button_inactive' : ""}`}>Войти</button>
                 </form>
                 <div className="login__reg-area">

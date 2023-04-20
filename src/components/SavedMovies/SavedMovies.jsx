@@ -33,12 +33,8 @@ const SavedMovies = (
     const {pathname} = useLocation();
 
     useEffect(() => {
-      if(savedMovies && savedMovies.length === 0) {
-        setError('Ничего не найдено');
-      } else {
         setError('');
-      }
-    }, [savedMovies]);
+    }, []);
 
     useEffect(() => {
       setFilterSaved('');

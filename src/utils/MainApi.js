@@ -37,7 +37,7 @@ class Api {
                   if(res.status === 409) {
                       return Promise.reject('Пользователь с таким email уже существует');
                   } else {
-                      return Promise.reject('При обновлении профиля произошла ошибка.');
+                      return Promise.reject('При обновлении данных пользователя произошла ошибка.');
                   }
               }
           })
