@@ -273,6 +273,7 @@ const App = () => {
 
     const onSignOut = () => {
         setLoggedIn(false);
+        setChecked(false);
         localStorage.removeItem('jwt');
         localStorage.removeItem('query');
         localStorage.removeItem('checkbox');
