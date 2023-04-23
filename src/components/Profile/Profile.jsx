@@ -4,7 +4,7 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import { CurrentUserContext } from "../../contexts/CurrentUserContest";
 import './Profile.css';
 
-const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, loggedIn, onSignOut, onUpdateUser, error, success }) => {
+const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, loggedIn, onSignOut, onUpdateUser, error, success, setError }) => {
     const currentUser = useContext(CurrentUserContext);
     const [name, setName] = useState(currentUser.name);
     const [email, setEmail] = useState(currentUser.email);
@@ -35,6 +35,13 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
         setDisabled(false);
         setVisible(false);
     }
+
+    useEffect(() => {
+        if(error) {
+            setDisabled(true);
+            setVisible(true);
+        }
+    }, [error])
 
     const emailHandler = (e) => {
         const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -80,13 +87,13 @@ const Profile = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible, lo
                 <h2 className="profile__greeting">Привет, {currentUser.name}!</h2>
                 <form className="profile__form">
                     <label className="profile__label">Имя
-                        <input disabled={!disabled} className={!disabled ? "profile__input profile__input_disabled" : "profile__input"} type="text" value={name} onChange={(e) => nameHandler(e)}/>
+                        <input onFocus={() => setError('')} disabled={!disabled} className={!disabled ? "profile__input profile__input_disabled" : "profile__input"} type="text" value={name} onChange={(e) => nameHandler(e)}/>
                     </label>
                     <div className={(nameError) ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
                         {nameError}
                     </div>
                     <label className="profile__label">E-mail
-                        <input className="profile__input" type="email" value={email} onChange={(e) => emailHandler(e)}/>
+                        <input onFocus={() => setError('')} className="profile__input" type="email" value={email} onChange={(e) => emailHandler(e)}/>
                     </label>
                     <div className={(emailError) ? "profile__container-error profile__container-error_active" : "profile__container-error"}>
                         {emailError}

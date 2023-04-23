@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.movies-backend.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3000';
 
 
 

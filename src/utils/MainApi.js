@@ -102,5 +102,5 @@ class Api {
 }
 
 export default new Api ({
-    baseUrl: 'https://api.movies-backend.nomoredomains.club',
+    baseUrl: 'http://localhost:3000',
 });

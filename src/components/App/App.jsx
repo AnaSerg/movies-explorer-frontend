@@ -246,9 +246,6 @@ const App = () => {
             })
             .catch((err) => {
                 setError(err);
-                setTimeout(() => {
-                    setError('');
-                }, 1000);
             })
     }
 
@@ -359,6 +356,8 @@ const App = () => {
                             onUpdateUser={onUpdateUser}
                             loggedIn={loggedIn}
                             onSignOut={onSignOut}
+                            error={error}
+                            setError={setError}
                         />}
                     />
                 </Route>
