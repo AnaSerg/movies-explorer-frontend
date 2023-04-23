@@ -214,7 +214,7 @@ const App = () => {
       return apiAuth.register(name, email, password)
           .then((res) => {
               if (res && !res.error) {
-                  navigation('/signin');
+                  onLogin({email, password});
               }
           })
           .catch((err) => {
