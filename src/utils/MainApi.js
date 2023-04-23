@@ -13,18 +13,26 @@ class Api {
     }
 
 
-    getUserInfo() {
+    getUserInfo(token) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
-            headers: this._headers
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
         })
             .then(this._handleResponse);
     }
 
-    sendUserInfo(data) {
+    sendUserInfo(data, token) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({
                 name: data.name,
                 email: data.email,
@@ -43,18 +51,26 @@ class Api {
           })
     }
 
-    getMovies() {
+    getMovies(token) {
         return fetch(`${this._baseUrl}/movies`, {
             method: 'GET',
-            headers: this._headers
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
         })
             .then(this._handleResponse);
     }
 
-    saveMovie(data) {
+    saveMovie(data, token) {
         return fetch(`${this._baseUrl}/movies`, {
             method: 'POST',
-            headers: this._headers,
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({
                 country: data.country,
                 director: data.director,
@@ -72,10 +88,14 @@ class Api {
             .then(this._handleResponse);
     }
 
-    deleteMovie(id) {
+    deleteMovie(id, token) {
         return fetch(`${this._baseUrl}/movies/${id}`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: {
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
         })
             .then(this._handleResponse);
     }
@@ -83,8 +103,4 @@ class Api {
 
 export default new Api ({
     baseUrl: 'https://api.movies-backend.nomoredomains.club',
-    headers: {
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-Type': 'application/json'
-    }
 });

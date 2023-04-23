@@ -37,18 +37,20 @@ const App = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
-  const moviesSaved = JSON.parse(localStorage.getItem('saved-movies'));
+    const moviesSaved = JSON.parse(localStorage.getItem('saved-movies'));
     const isChecked = JSON.parse(localStorage.getItem('checkbox'));
 
+    const jwt = localStorage.getItem('jwt');
+
     const {pathname} = useLocation();
-  const navigation = useNavigate();
+    const navigation = useNavigate();
 
     const auth = (jwt) => {
         return apiAuth.getContent(jwt)
             .then((res) => {
                 if (res) {
                     setLoggedIn(true);
-                      setCurrentUser(res.data);
+                    setCurrentUser(res.data);
                       ["/signin", "/signup"].includes(pathname)
                       ? navigation("/movies")
                       : navigation(pathname);
@@ -64,20 +66,24 @@ const App = () => {
     }
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
         if (jwt) {
-            auth(jwt);
+          auth(jwt);
         }
     }, [loggedIn]);
 
     useEffect(() => {
         if (loggedIn)  {
             setMoviesLoading(true);
-            Promise.all([Api.getMovies(), Api.getUserInfo()])
+            Promise.all([Api.getMovies(jwt), Api.getUserInfo(jwt)])
                 .then(([movies, user]) => {
+                  if(movies) {
                     setSavedMovies(movies.data.filter((movie) => movie.owner === currentUser._id));
                     setInitialSavedMovies(movies.data.filter((movie) => movie.owner === currentUser._id));
                     localStorage.setItem('saved-movies', JSON.stringify(movies.data.filter((movie) => movie.owner === currentUser._id)));
+                  } else {
+                    setSavedMovies(moviesSaved.data.filter((movie) => movie.owner === currentUser._id));
+                    setInitialSavedMovies(moviesSaved.data.filter((movie) => movie.owner === currentUser._id));
+                  }
                 })
                 .catch((err) => console.log(err))
               .finally(() => {
@@ -85,6 +91,7 @@ const App = () => {
               })
         }
     }, [currentUser])
+
 
     useEffect(() => {
         onGetScreenSize();
@@ -229,7 +236,7 @@ const App = () => {
     };
 
     const onUpdateUser = (data) => {
-        return Api.sendUserInfo(data)
+        return Api.sendUserInfo(data, jwt)
             .then((data) => {
                 setCurrentUser(data.data);
                 setSuccess('Данные обновлены');
@@ -245,8 +252,8 @@ const App = () => {
             })
     }
 
-    const onSaveMovie = (data) => {
-        Api.saveMovie(data)
+    const onSaveMovie = (data, token) => {
+        Api.saveMovie(data, token)
             .then((newMovie) => {
                 setInitialSavedMovies([newMovie.data, ...initialSavedMovies]);
                 setSavedMovies([newMovie.data, ...savedMovies]);
@@ -258,7 +265,7 @@ const App = () => {
     }
 
     const onDeleteMovie = (id) => {
-        Api.deleteMovie(id)
+        Api.deleteMovie(id, jwt)
             .then((delMovie) => {
                 setInitialSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
                 setSavedMovies((state) => state.filter((c) => c._id === id ? !delMovie.data : c));
@@ -274,6 +281,7 @@ const App = () => {
     const onSignOut = () => {
         setLoggedIn(false);
         setChecked(false);
+        setCurrentUser({});
         localStorage.removeItem('jwt');
         localStorage.removeItem('query');
         localStorage.removeItem('checkbox');

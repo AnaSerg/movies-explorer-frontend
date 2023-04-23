@@ -5,7 +5,7 @@ import './MoviesCard.css';
 const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, duration, nameEN, nameRU, country, director, year, description, trailerLink, thumbnail, ownerId, id }) => {
     const [isLiked, setLike] = useState(false);
     const savedMov = localStorage.getItem('saved-movies') && JSON.parse(localStorage.getItem('saved-movies'));
-
+    const jwt = localStorage.getItem('jwt');
 
     const location = useLocation();
 
@@ -25,14 +25,16 @@ const MoviesCard = ({ savedMovies, onSaveMovie, onDeleteMovie, image, title, dur
     function handleLikeClick() {
         if(!isLiked) {
             setLike(true);
-            onSaveMovie({ownerId, country, director, nameRU, nameEN, year, description, trailerLink, thumbnail, duration, id, image })
+            onSaveMovie({ownerId, country, director, nameRU, nameEN, year, description, trailerLink, thumbnail, duration, id, image }, jwt)
         } else {
             setLike(false);
-            savedMov.forEach((movie) => {
-                if(movie.movieId === id) {
-                    onDeleteMovie(movie._id);
-                }
-            })
+            if(savedMov.length !== 0) {
+                savedMov.forEach((movie) => {
+                    if (movie.movieId === id) {
+                        onDeleteMovie(movie._id);
+                    }
+                })
+            }
         }
     }
 
