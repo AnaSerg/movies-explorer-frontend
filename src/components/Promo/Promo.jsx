@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import AboutProject from '../AboutProject/AboutProject';
 import './Promo.css';
 import PromoImg from '../../images/landing-image.png';
 
-const Promo = () => {
+const Promo = ({handleClickScroll}) => {
     return (
         <section className="promo">
             <div className="promo__wrapper">
@@ -14,9 +12,9 @@ const Promo = () => {
                     Листайте ниже, чтобы узнать больше
                     про этот проект и его создателя.
                 </p>
-                <Link to={AboutProject} className="promo__button">
+                <button onClick={() => handleClickScroll()} className="promo__button">
                         Узнать больше
-                </Link>
+                </button>
             </div>
         </section>
     )

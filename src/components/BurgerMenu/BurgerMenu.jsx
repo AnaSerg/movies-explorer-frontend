@@ -16,17 +16,17 @@ const BurgerMenu = ({ isBurgerMenuVisible, setBurgerMenuVisible }) => {
                 <button onClick={closeBurgerMenu} className="burger-menu__button"></button>
                 <nav className="burger-menu__navigation">
                     <ul className="burger-menu__links">
-                        <li className={`burger-menu__link-item ${pathname === '/' ? 'burger-menu__link-item_active' : ""}`}>
+                        <li onClick={closeBurgerMenu} className={`burger-menu__link-item ${pathname === '/' ? 'burger-menu__link-item_active' : ""}`}>
                             <Link to='/' className="burger-menu__link">Главная</Link>
                         </li>
-                        <li className={`burger-menu__link-item ${pathname === '/movies' ? 'burger-menu__link-item_active' : ""}`}>
+                        <li onClick={closeBurgerMenu} className={`burger-menu__link-item ${pathname === '/movies' ? 'burger-menu__link-item_active' : ""}`}>
                             <Link to='/movies' className="burger-menu__link">Фильмы</Link>
                         </li>
-                        <li className={`burger-menu__link-item ${pathname === '/saved-movies' ? 'burger-menu__link-item_active' : ""}`}>
+                        <li onClick={closeBurgerMenu} className={`burger-menu__link-item ${pathname === '/saved-movies' ? 'burger-menu__link-item_active' : ""}`}>
                             <Link to='/saved-movies' className="burger-menu__link">Сохранённые фильмы</Link>
                         </li>
                     </ul>
-                    <ProfileButton className="burger-menu__profile-button profile-button" />
+                    <ProfileButton closeBurgerMenu={closeBurgerMenu} className="burger-menu__profile-button profile-button" />
                 </nav>
             </div>
         </div>

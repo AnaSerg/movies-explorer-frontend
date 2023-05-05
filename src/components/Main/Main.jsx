@@ -9,14 +9,21 @@ import Footer from '../Footer/Footer';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './Main.css';
 
-const Main = ({ openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
+const Main = ({ loggedIn, openBurgerMenu, isBurgerMenuVisible, setBurgerMenuVisible }) => {
+
+    const handleClickScroll = () => {
+        const element = document.getElementById('about-project');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
-        <div>
-            <Header openBurgerMenu={openBurgerMenu}/>
+        <div className="page__container">
+            <Header openBurgerMenu={openBurgerMenu} loggedIn={loggedIn}/>
             <main className="main">
-                <Promo />
-                <AboutProject title='О проекте'/>
+                <Promo handleClickScroll={handleClickScroll}/>
+                <AboutProject id="about-project" title='О проекте'/>
                 <Techs title='Технологии'/>
                 <AboutMe title='Студент' />
                 <Portfolio />

@@ -1,0 +1,19 @@
+.movies-preloader {
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.movies-error {
+    max-width: 50%;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.page__container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}

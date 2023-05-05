@@ -3,4 +3,5 @@
   min-height: 100vh;
   font-family: 'Inter', 'Arial', sans-serif;
   color: #000;
+  position: relative;
 }

@@ -41,6 +41,9 @@
         background-position: center;
         background-color: #fff;
     }
+    .header__menu-button_main {
+        background-color: #F3C1F8;
+    }
 }
 
 /* Max-width 400px */

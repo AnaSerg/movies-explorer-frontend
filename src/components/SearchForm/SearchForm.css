@@ -59,6 +59,16 @@
     line-height: 1.11;
 }
 
+.search__error {
+    font-size: 10px;
+    color: red;
+    visibility: hidden;
+}
+
+.search__error_active {
+    visibility: visible;
+}
+
 @media screen and (max-width: 1200px) {
     .search-bar {
         margin: 68px 30px 0;
