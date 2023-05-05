@@ -22,7 +22,7 @@ React, webpack, CSS, БЭМ, API
 ### Развертывание проекта
 
 ```sh
-git@github.com:AnaSerg/movies-explorer-frontend.git
+git clone git@github.com:AnaSerg/movies-explorer-frontend.git
 npm install
 npm start
 ```
